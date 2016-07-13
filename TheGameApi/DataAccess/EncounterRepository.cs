@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Spatial;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
@@ -23,6 +24,14 @@ namespace TheGameApi.DataAccess
         public Encounter Find(int id)
         {
             return _context.Encounters.Find(id);
+        }
+
+        public List<Encounter> Find(DbGeometry geom)
+        {
+            List<Encounter> encounters = _context.Encounters.Where(
+                e => e.PointGeometry.Within(geom)).ToList();
+
+            return encounters;
         }
 
         public void InsertOrUpdate(Encounter encounter)
@@ -51,7 +60,6 @@ namespace TheGameApi.DataAccess
 
         void IDisposable.Dispose()
         {
-
             _context.Dispose();
         }
     }

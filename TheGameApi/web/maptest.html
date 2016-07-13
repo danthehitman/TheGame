@@ -17,13 +17,27 @@
         var map;
 
         function initialize() {
-            infowindow = new google.maps.InfoWindow({});
             map = new google.maps.Map(document.getElementById("map"),
               {
                   zoom: 4,
                   center: new google.maps.LatLng(22.7964, 79.8456),
                   mapTypeId: google.maps.MapTypeId.HYBRID
               });
+
+            google.maps.event.addListener(map, "click", function (event) {
+                var latitude = event.latLng.lat();
+                var longitude = event.latLng.lng();
+                console.log( latitude + ', ' + longitude );
+                var pos = {
+                    lat: latitude,
+                    lng: longitude
+                };
+                $.ajax({
+                    type: "GET",
+                    url: "http://localhost:7598/api/encounters?lat=" + latitude + "&lng=" + longitude,
+                    success: processEncounters
+                });
+            });            
 
             //var coords =
             //[
@@ -70,14 +84,14 @@
 
                     map.setCenter(pos);
 
-                    $.ajax({
-                        contentType: 'application/json',
-                        type: "POST",
-                        url: "http://localhost:7598/api/encounters",
-                        dataType: 'json',
-                        data: JSON.stringify(pos),
-                        success: processResults
-                    });
+                    //$.ajax({
+                    //    contentType: 'application/json',
+                    //    type: "POST",
+                    //    url: "http://localhost:7598/api/encounters",
+                    //    dataType: 'json',
+                    //    data: JSON.stringify(pos),
+                    //    success: processResults
+                    //});
 
                 }, function () {
                     handleLocationError(true, infoWindow, map.getCenter());
@@ -103,6 +117,17 @@
             }
         }
 
+        function processEncounters(data) {
+            data = JSON.parse(data);
+            for (var i = 0; i < data.length; i++) {
+                var wkt = new Wkt.Wkt();
+                wkt.read(data[i].PointGeometry.Geometry.WellKnownText);
+                
+                var point = new google.maps.LatLng(wkt.components[0].x, wkt.components[0].y);
+                createMarker(point, "marker " + i);
+            }
+        }
+
         function createMarker(point, content) {
             var marker = new google.maps.Marker({ position: point, map: map });
             google.maps.event.addListener(marker, "click", function (evt) {
@@ -118,5 +143,7 @@
 
 </script>
     <script src="jquery-3.0.0.min.js"></script>
+    <script src="wicket.js" type="text/javascript"></script>
+    <script src="wicket-gmap3.js" type="text/javascript"></script>
 </body>
 </html>

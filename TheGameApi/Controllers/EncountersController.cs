@@ -17,47 +17,14 @@ namespace TheGameApi.Models
     {
         EncounterRepository encRepo = new EncounterRepository();
         // GET: api/Encounters
-        public string Get()
+        public string Get([FromUri]double lat, [FromUri]double lng)
         {
-            Coordinate[] coords = new Coordinate[10];
-            //creates a random point variable
-            Random rnd = new Random();
-            //Creates the center coordiante for the new polygon
-            Coordinate center = new Coordinate((rnd.NextDouble() * 360) - 180, (rnd.NextDouble() * 180) - 90);
-            //a for loop that generates a new random X and Y value and feeds those values into the coordinate array
-            for (int i = 0; i < 10; i++)
-            {
-                coords[i] = new Coordinate(center.X + Math.Cos((i * 2) * Math.PI / 18), center.Y + (i * 2) * Math.PI / 18);
-            }
-            //creates a new polygon from the coordinate array
-            coords[9] = new Coordinate(coords[0].X, coords[0].Y);
-            Polygon pg = new Polygon(coords);
-
-            //Feature f = new Feature();
-            //FeatureSet fs = new FeatureSet(f.FeatureType);
-            //fs.Features.Add(pg);
-
-            //FeatureSet points = RandomGeometry.RandomPoints(fs, 10) as FeatureSet;
-
-            //IMultiPoint pointsMp = points as IMultiPoint;
-            //return pointsMp.ToString();
-
-            List<List<double>> points = new List<List<double>>();
-
-            Envelope env = pg.Envelope as Envelope;
-
-            var sw = env.BottomLeft();
-            var ne = env.TopRight();
-
-            var rand = new Random();
-            for (var i = 0; i < 100; i++)
-            {
-                var ptLat = rand.NextDouble() * (ne.Y - sw.X) + sw.X;
-                var ptLng = rand.NextDouble() * (ne.X - sw.Y) + sw.Y;
-
-                points.Add(new List<double>() { ptLng, ptLat });
-            }
-            return JsonConvert.SerializeObject(points);
+            var pnt = new Point(lat, lng);
+            Polygon pg = pnt.Buffer(.1) as Polygon;
+            var p = DbGeometry.FromText(pg.ToText());
+            var encounters = encRepo.Find(p);
+            //var encounters = encRepo.All;
+            return JsonConvert.SerializeObject(encounters);
         }
 
         // GET: api/Encounters/5
@@ -95,14 +62,14 @@ namespace TheGameApi.Models
                 if (pg.Contains(p))
                 {
                     points.Add(new List<double>() {ptLng, ptLat});
-                    encRepo.InsertOrUpdate(new Encounter()
-                    {
-                        Name = $"Test{i}",
-                        PointGeometry = DbGeometry.FromText(p.ToText())
-                    });
+                    //encRepo.InsertOrUpdate(new Encounter()
+                    //{
+                    //    Name = $"Test{i}",
+                    //    PointGeometry = DbGeometry.FromText(p.ToText())
+                    //});
                 }
             }
-            encRepo.Save();
+            //encRepo.Save();
             return JsonConvert.SerializeObject(points);
         }
 
