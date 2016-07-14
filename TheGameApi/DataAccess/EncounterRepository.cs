@@ -4,7 +4,6 @@ using System.Data.Entity;
 using System.Data.Entity.Spatial;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Web;
 using TheGameApi.Models;
 
 namespace TheGameApi.DataAccess

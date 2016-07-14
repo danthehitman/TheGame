@@ -231,6 +231,8 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="DataAccess\DiscoveryRepository.cs" />
+    <Compile Include="DataAccess\IDiscoveryRepository.cs" />
     <Compile Include="DataAccess\EncounterRepository.cs" />
     <Compile Include="DataAccess\IEncountersRepository.cs" />
     <Compile Include="DataAccess\TheGameContext.cs" />
@@ -238,8 +240,23 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Controllers\EncountersController.cs" />
+    <Compile Include="Migrations\201607140614305_Initial.cs" />
+    <Compile Include="Migrations\201607140614305_Initial.Designer.cs">
+      <DependentUpon>201607140614305_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Discovery.cs" />
     <Compile Include="Models\Encounter.cs" />
     <Compile Include="Models\GoogleLatLng.cs" />
+    <Compile Include="Models\Item.cs" />
+    <Compile Include="Models\ItemClass.cs" />
+    <Compile Include="Models\ItemType.cs" />
+    <Compile Include="Models\Junk.cs" />
+    <Compile Include="Models\JunkClass.cs" />
+    <Compile Include="Models\JunkType.cs" />
+    <Compile Include="Models\Quality.cs" />
+    <Compile Include="Models\Recipe.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -296,7 +313,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -304,6 +320,11 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201607140614305_Initial.resx">
+      <DependentUpon>201607140614305_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

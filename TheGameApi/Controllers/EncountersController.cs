@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Spatial;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using DotSpatial.Data;
 using DotSpatial.Topology;
-using DotSpatial.Analysis;
 using Newtonsoft.Json;
 using TheGameApi.DataAccess;
 
