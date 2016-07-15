@@ -232,9 +232,13 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DataAccess\DiscoveryRepository.cs" />
-    <Compile Include="DataAccess\IDiscoveryRepository.cs" />
+    <Compile Include="DataAccess\GeoRepository.cs" />
     <Compile Include="DataAccess\EncounterRepository.cs" />
-    <Compile Include="DataAccess\IEncountersRepository.cs" />
+    <Compile Include="DataAccess\IGeoRepository.cs" />
+    <Compile Include="DataAccess\IRepository.cs" />
+    <Compile Include="DataAccess\ItemRepository.cs" />
+    <Compile Include="DataAccess\ItemTypeRepository.cs" />
+    <Compile Include="DataAccess\Repository.cs" />
     <Compile Include="DataAccess\TheGameContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -247,6 +251,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Discovery.cs" />
     <Compile Include="Models\Encounter.cs" />
+    <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\GoogleLatLng.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ItemClass.cs" />
@@ -254,6 +259,7 @@
     <Compile Include="Models\Junk.cs" />
     <Compile Include="Models\JunkClass.cs" />
     <Compile Include="Models\JunkType.cs" />
+    <Compile Include="Models\GeoEntity.cs" />
     <Compile Include="Models\Quality.cs" />
     <Compile Include="Models\Recipe.cs" />
     <Compile Include="Models\User.cs" />

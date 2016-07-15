@@ -2,9 +2,8 @@
 
 namespace TheGameApi.Models
 {
-    public class User
+    public class User : Entity
     {
-        public Guid? Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public DateTime EnrollDate { get; set; }

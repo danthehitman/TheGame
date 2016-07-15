@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace TheGameApi.Models
 {
-    public class Recipe
+    public class Recipe : Entity
     {
-        public Guid? Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public ICollection<ItemType> ItemTypes { get; set; }
