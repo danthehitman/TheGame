@@ -25,6 +25,7 @@ namespace TheGameApi.Migrations
 
         private void SeedStuff()
         {
+            //Junk Classes===============================================================================================================
             var StickyStuff = new JunkClass() { Description = "Things for binding objects together.", Name = "Sticky Stuff" };
             _junkClassRepo.InsertOrUpdate(StickyStuff);
             var StructuralStuff = new JunkClass() { Description = "Things for giving structure and form to objects.", Name = "Structural Stuff" };
@@ -47,7 +48,7 @@ namespace TheGameApi.Migrations
             _junkClassRepo.InsertOrUpdate(GeoStuff);
             _junkClassRepo.Save();
 
-            //Junk Types===============================================================================================================
+            //Junk Types=================================================================================================================
             //StickStuff
             var DuckTape = new JunkType() { Name = "Duck Tape", Description = "The stickiest, strongest, most amazing tape.", Effectiveness = 10, Classes = new List<JunkClass>() { StickyStuff } };
             _junkTypeRepo.InsertOrUpdate(DuckTape);
@@ -92,12 +93,33 @@ namespace TheGameApi.Migrations
             //ConductiveStuff
             var TinFoil = new JunkType() { Name = "Tin Foil", Description = "Used for baking and statellites", Effectiveness = 3, Classes = new List<JunkClass>() { ConductiveStuff } };
             _junkTypeRepo.InsertOrUpdate(TinFoil);
-            var BareWire = new JunkType() { Name = "Bare Wire", Description = "Conducts electecity.", Effectiveness = 5, Classes = new List<JunkClass>() { ConductiveStuff } };
+            var BareWire = new JunkType() { Name = "Bare Wire", Description = "Conducts electricity.", Effectiveness = 5, Classes = new List<JunkClass>() { ConductiveStuff } };
             _junkTypeRepo.InsertOrUpdate(BareWire);
-            var CoatedWire = new JunkType() { Name = "Coated Wire", Description = "Conducts electecity.", Effectiveness = 7, Classes = new List<JunkClass>() { ConductiveStuff } };
+            var CoatedWire = new JunkType() { Name = "Coated Wire", Description = "Conducts electricity.", Effectiveness = 7, Classes = new List<JunkClass>() { ConductiveStuff } };
             _junkTypeRepo.InsertOrUpdate(CoatedWire);
-
+            //ButtonStuff
+            var PushButton = new JunkType() { Name = "Pushbutton", Description = "You push it.", Effectiveness = 5, Classes = new List<JunkClass>() { ButtonStuff } };
+            _junkTypeRepo.InsertOrUpdate(PushButton);
+            //SwitchStuff
+            var ToggleSwitch = new JunkType() { Name = "Toggle Switch", Description = "A switch with on and off.", Effectiveness = 5, Classes = new List<JunkClass>() { SwitchStuff } };
+            _junkTypeRepo.InsertOrUpdate(ToggleSwitch);
+            //ComputerStuff
+            var LeapFishToyComputer = new JunkType() { Name = "Leap Fish Learning Computer", Description = "Please, will someone shut that thing off!!!", Effectiveness = 2, Classes = new List<JunkClass>() { ComputerStuff } };
+            _junkTypeRepo.InsertOrUpdate(LeapFishToyComputer);
+            var NerdKitProcessor = new JunkType() { Name = "Nerd Kit Processing Unit.", Description = "A small processin unit from a typical nerd kit.", Effectiveness = 5, Classes = new List<JunkClass>() { ComputerStuff } };
+            _junkTypeRepo.InsertOrUpdate(NerdKitProcessor);
+            var LaptopComputer = new JunkType() { Name = "Laptop Computer", Description = "A compact and powerful computer.", Effectiveness = 7, Classes = new List<JunkClass>() { ComputerStuff, GeoStuff } };
+            _junkTypeRepo.InsertOrUpdate(LaptopComputer);
+            //GeoStuff
+            var NerdKitGeoSensor = new JunkType() { Name = "Geo Sensor", Description = "A gps unit from a typical nerd kit.", Effectiveness = 7, Classes = new List<JunkClass>() { GeoStuff } };
+            _junkTypeRepo.InsertOrUpdate(NerdKitGeoSensor);
+            var HandHeldGps = new JunkType() { Name = "Handheld Gps Unit", Description = "Accurate and fast geo tracking.", Effectiveness = 10, Classes = new List<JunkClass>() { GeoStuff } };
+            _junkTypeRepo.InsertOrUpdate(HandHeldGps);
             _junkTypeRepo.Save();
+
+            //Item Classes===============================================================================================================
+
+            //ItemTypes==================================================================================================================
         }
     }
 }
