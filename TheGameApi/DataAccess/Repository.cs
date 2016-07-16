@@ -6,9 +6,19 @@ using TheGameApi.Models;
 
 namespace TheGameApi.DataAccess
 {
-    public class Repository<T> : IRepository<T> where T : Entity
+    public abstract class Repository<T> : IRepository<T> where T : Entity
     {
-        protected readonly TheGameContext _context = new TheGameContext();
+        public Repository()
+        {
+            _context = new TheGameContext();
+        }
+
+        public Repository(TheGameContext context)
+        {
+            _context = context;
+        }
+
+        protected readonly TheGameContext _context;
         protected DbSet<T> _entities;
 
         public IQueryable<T> All => _entities;

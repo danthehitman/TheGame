@@ -236,8 +236,13 @@
     <Compile Include="DataAccess\EncounterRepository.cs" />
     <Compile Include="DataAccess\IGeoRepository.cs" />
     <Compile Include="DataAccess\IRepository.cs" />
+    <Compile Include="DataAccess\ItemClassRepository.cs" />
     <Compile Include="DataAccess\ItemRepository.cs" />
     <Compile Include="DataAccess\ItemTypeRepository.cs" />
+    <Compile Include="DataAccess\JunkClassRepository.cs" />
+    <Compile Include="DataAccess\JunkRepository.cs" />
+    <Compile Include="DataAccess\JunkTypeRepository.cs" />
+    <Compile Include="DataAccess\RecipeRepository.cs" />
     <Compile Include="DataAccess\Repository.cs" />
     <Compile Include="DataAccess\TheGameContext.cs" />
     <Compile Include="Global.asax.cs">
