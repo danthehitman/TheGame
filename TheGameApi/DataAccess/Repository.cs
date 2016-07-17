@@ -34,7 +34,7 @@ namespace TheGameApi.DataAccess
             return _entities.Find(id);
         }
 
-        public void InsertOrUpdate(T entity)
+        public virtual void InsertOrUpdate(T entity)
         {
             if (entity.Id == null)
             {

@@ -4,7 +4,12 @@ namespace TheGameApi.DataAccess
 {
     public class ItemTypeRepository : Repository<ItemType>
     {
-        public ItemTypeRepository()
+        public ItemTypeRepository() : base()
+        {
+            _entities = _context.ItemTypes;
+        }
+
+        public ItemTypeRepository(TheGameContext context) : base(context)
         {
             _entities = _context.ItemTypes;
         }

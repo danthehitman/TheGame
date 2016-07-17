@@ -231,6 +231,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Core\Utilities\PasswordStorage.cs" />
     <Compile Include="DataAccess\DiscoveryRepository.cs" />
     <Compile Include="DataAccess\GeoRepository.cs" />
     <Compile Include="DataAccess\EncounterRepository.cs" />
@@ -245,6 +246,7 @@
     <Compile Include="DataAccess\RecipeRepository.cs" />
     <Compile Include="DataAccess\Repository.cs" />
     <Compile Include="DataAccess\TheGameContext.cs" />
+    <Compile Include="DataAccess\UserRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -258,6 +260,7 @@
     <Compile Include="Models\Encounter.cs" />
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\GoogleLatLng.cs" />
+    <Compile Include="Models\Ingredient.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ItemClass.cs" />
     <Compile Include="Models\ItemType.cs" />

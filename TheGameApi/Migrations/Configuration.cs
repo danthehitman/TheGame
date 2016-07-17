@@ -9,6 +9,10 @@ namespace TheGameApi.Migrations
     {
         private JunkClassRepository _junkClassRepo;
         private JunkTypeRepository _junkTypeRepo;
+        private ItemClassRepository _itemClasseRepo;
+        private ItemTypeRepository _itemTypeRepo;
+        private UserRepository _userRepo;
+        private RecipeRepository _recipeRepo;
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
@@ -20,11 +24,20 @@ namespace TheGameApi.Migrations
         {
             _junkClassRepo = new JunkClassRepository(context);
             _junkTypeRepo = new JunkTypeRepository(context);
+            _itemClasseRepo = new ItemClassRepository(context);
+            _itemTypeRepo = new ItemTypeRepository(context);
+            _userRepo = new UserRepository(context);
+            _recipeRepo = new RecipeRepository(context);
             SeedStuff();
         }
 
         private void SeedStuff()
         {
+            //Users
+            var UserDan = new User() { Email = "danthehitman@gmail.com", Password = "test", Name =  "ARKDJ" };
+            _userRepo.InsertOrUpdate(UserDan);
+            _userRepo.Save();
+
             //Junk Classes===============================================================================================================
             var StickyStuff = new JunkClass() { Description = "Things for binding objects together.", Name = "Sticky Stuff" };
             _junkClassRepo.InsertOrUpdate(StickyStuff);
@@ -118,8 +131,33 @@ namespace TheGameApi.Migrations
             _junkTypeRepo.Save();
 
             //Item Classes===============================================================================================================
+            var Satellites = new ItemClass() {Name = "Satellites", Description = "Orbital and 'Sub-Orbital' objects hurled through the air with rockets."};
+            _itemClasseRepo.InsertOrUpdate(Satellites);
+            var Scanners = new ItemClass() { Name = "Scanners", Description = "Used to reveal items and encounters in the world"};
+            _itemClasseRepo.InsertOrUpdate(Scanners);
+            _itemClasseRepo.Save();
 
             //ItemTypes==================================================================================================================
+            //Satellites
+            var ShortRangeBallisticScanner = new ItemType() { Name = "Short Range Ballistic Scanner", Description = "A rudamentary scanner that you can attach to a basic rocket.", Classes = new List<ItemClass>() {Satellites, Scanners} };
+            _itemTypeRepo.InsertOrUpdate(ShortRangeBallisticScanner);
+            var LongRangeBallisticScanner = new ItemType() { Name = "Long Range Ballistic Scanner", Description = "A more advanced scanner that you can attach to a basic and advanced rockets.", Classes = new List<ItemClass>() { Satellites, Scanners } };
+            _itemTypeRepo.InsertOrUpdate(LongRangeBallisticScanner);
+            var BasicOrbitalSatellite = new ItemType() { Name = "Basic Orbital Satellite", Description = "A basic satellite to orbit the earth and gather information.  Limited orbits.", Classes = new List<ItemClass>() { Satellites, Scanners } };
+            _itemTypeRepo.InsertOrUpdate(BasicOrbitalSatellite);
+            var AdvancedOrbitalSatellite = new ItemType() { Name = "Advanced Orbital Satellite", Description = "An advanced satellite to orbit the earth and gather information.  Permanent orbit.", Classes = new List<ItemClass>() { Satellites, Scanners } };
+            _itemTypeRepo.InsertOrUpdate(AdvancedOrbitalSatellite);
+            //Scanners
+            var ShortRangeHandheldScanner = new ItemType() { Name = "Short Range Handheld Scanner", Description = "A basic handheld device to reveal items on the map.  Limited uses.", Classes = new List<ItemClass>() { Scanners } };
+            _itemTypeRepo.InsertOrUpdate(ShortRangeHandheldScanner);
+            var LongRangeHandheldScanner = new ItemType() { Name = "Long Range Handheld Scanner", Description = "A more advanced handheld device to reveal items on the map.  Limited uses.", Classes = new List<ItemClass>() { Scanners } };
+            _itemTypeRepo.InsertOrUpdate(LongRangeHandheldScanner);
+            _itemTypeRepo.Save();
+
+            //Recipes==================================================================================================================
+            var ShortRangeHandheldScannerRecipe = new Recipe() { Name = "Short Range Handheld Scanner Recipe",  };
+            _itemTypeRepo.InsertOrUpdate(LongRangeHandheldScanner);
+            _itemTypeRepo.Save();
         }
     }
 }
