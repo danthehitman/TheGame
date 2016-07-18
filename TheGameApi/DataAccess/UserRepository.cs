@@ -24,7 +24,7 @@ namespace TheGameApi.DataAccess
             }
             if (entity.EnrollDate == DateTime.MinValue)
             {
-                entity.EnrollDate = DateTime.Now;
+                entity.EnrollDate = DateTime.UtcNow;
             }
             base.InsertOrUpdate(entity);
         }

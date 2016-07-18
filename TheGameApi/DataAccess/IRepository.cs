@@ -10,11 +10,11 @@ namespace TheGameApi.DataAccess
 
         IQueryable<T> AllIncluding(params Expression<Func<T, object>>[] includeProperties);
 
-        T Find(int id);
+        T Find(Guid id);
 
         void InsertOrUpdate(T entity);
 
-        void Delete(int id);
+        void Delete(Guid id);
 
         void Save();
     }

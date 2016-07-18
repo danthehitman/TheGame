@@ -14,6 +14,7 @@ namespace TheGameApi.Migrations
         private ItemTypeRepository _itemTypeRepo;
         private UserRepository _userRepo;
         private RecipeRepository _recipeRepo;
+        private SessionRepository _sessionRepo;
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
@@ -29,6 +30,7 @@ namespace TheGameApi.Migrations
             _itemTypeRepo = new ItemTypeRepository(context);
             _userRepo = new UserRepository(context);
             _recipeRepo = new RecipeRepository(context);
+            _sessionRepo = new SessionRepository(context);
             SeedStuff();
         }
 
@@ -38,6 +40,10 @@ namespace TheGameApi.Migrations
             var UserDan = new User() { Email = "danthehitman@gmail.com", Password = "test", Name =  "ARKDJ" };
             _userRepo.InsertOrUpdate(UserDan);
             _userRepo.Save();
+
+            var SessionDan = new Session() { User = UserDan, Expires = DateTime.UtcNow.AddDays(2), Id = Guid.Parse("7EA9B445-F160-4F58-82E6-B87A333EF344") };
+            _sessionRepo.InsertOrUpdate(SessionDan);
+            _sessionRepo.Save();
 
             //Junk Classes===============================================================================================================
             var StickyStuff = new JunkClass() { Description = "Things for binding objects together.", Name = "Sticky Stuff" };
@@ -140,18 +146,18 @@ namespace TheGameApi.Migrations
 
             //ItemTypes==================================================================================================================
             //Satellites
-            var ShortRangeBallisticScanner = new ItemType() { Name = "Short Range Ballistic Scanner", Description = "A rudamentary scanner that you can attach to a basic rocket.", Classes = new List<ItemClass>() {Satellites, Scanners} };
+            var ShortRangeBallisticScanner = new ItemType() { Name = "Short Range Ballistic Scanner", ClassMultiplier = 4, Description = "A rudamentary scanner that you can attach to a basic rocket.", Classes = new List<ItemClass>() {Satellites, Scanners} };
             _itemTypeRepo.InsertOrUpdate(ShortRangeBallisticScanner);
-            var LongRangeBallisticScanner = new ItemType() { Name = "Long Range Ballistic Scanner", Description = "A more advanced scanner that you can attach to a basic and advanced rockets.", Classes = new List<ItemClass>() { Satellites, Scanners } };
+            var LongRangeBallisticScanner = new ItemType() { Name = "Long Range Ballistic Scanner", ClassMultiplier = 7, Description = "A more advanced scanner that you can attach to a basic and advanced rockets.", Classes = new List<ItemClass>() { Satellites, Scanners } };
             _itemTypeRepo.InsertOrUpdate(LongRangeBallisticScanner);
-            var BasicOrbitalSatellite = new ItemType() { Name = "Basic Orbital Satellite", Description = "A basic satellite to orbit the earth and gather information.  Limited orbits.", Classes = new List<ItemClass>() { Satellites, Scanners } };
+            var BasicOrbitalSatellite = new ItemType() { Name = "Basic Orbital Satellite", ClassMultiplier = 12, Description = "A basic satellite to orbit the earth and gather information.  Limited orbits.", Classes = new List<ItemClass>() { Satellites, Scanners } };
             _itemTypeRepo.InsertOrUpdate(BasicOrbitalSatellite);
-            var AdvancedOrbitalSatellite = new ItemType() { Name = "Advanced Orbital Satellite", Description = "An advanced satellite to orbit the earth and gather information.  Permanent orbit.", Classes = new List<ItemClass>() { Satellites, Scanners } };
+            var AdvancedOrbitalSatellite = new ItemType() { Name = "Advanced Orbital Satellite", ClassMultiplier = 20, Description = "An advanced satellite to orbit the earth and gather information.  Permanent orbit.", Classes = new List<ItemClass>() { Satellites, Scanners } };
             _itemTypeRepo.InsertOrUpdate(AdvancedOrbitalSatellite);
             //Scanners
-            var ShortRangeHandheldScanner = new ItemType() { Name = "Short Range Handheld Scanner", Description = "A basic handheld device to reveal items on the map.  Limited uses.", Classes = new List<ItemClass>() { Scanners } };
+            var ShortRangeHandheldScanner = new ItemType() { Name = "Short Range Handheld Scanner", ClassMultiplier = 1, Description = "A basic handheld device to reveal items on the map.  Limited uses.", Classes = new List<ItemClass>() { Scanners } };
             _itemTypeRepo.InsertOrUpdate(ShortRangeHandheldScanner);
-            var LongRangeHandheldScanner = new ItemType() { Name = "Long Range Handheld Scanner", Description = "A more advanced handheld device to reveal items on the map.  Limited uses.", Classes = new List<ItemClass>() { Scanners } };
+            var LongRangeHandheldScanner = new ItemType() { Name = "Long Range Handheld Scanner", ClassMultiplier = 2, Description = "A more advanced handheld device to reveal items on the map.  Limited uses.", Classes = new List<ItemClass>() { Scanners } };
             _itemTypeRepo.InsertOrUpdate(LongRangeHandheldScanner);
             _itemTypeRepo.Save();
 

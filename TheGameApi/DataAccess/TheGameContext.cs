@@ -52,6 +52,7 @@ namespace TheGameApi.DataAccess
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<RecipeJunkClass> RecipeJunkClasses { get; set; }
         public DbSet<RecipeItemClass> RecipeItemClasses { get; set; }
+        public DbSet<Session> Sessions { get; set; }
     }
 
 }

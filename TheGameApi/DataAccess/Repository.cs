@@ -29,7 +29,7 @@ namespace TheGameApi.DataAccess
                 _entities, (current, includeProperty) => current.Include(includeProperty));
         }
 
-        public T Find(int id)
+        public T Find(Guid id)
         {
             return _entities.Find(id);
         }
@@ -47,7 +47,7 @@ namespace TheGameApi.DataAccess
             }
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             var entity = _context.Items.Find(id);
             _context.Items.Remove(entity);
