@@ -1,5 +1,6 @@
 namespace TheGameApi.Migrations
 {
+    using System;
     using System.Collections.Generic;
     using System.Data.Entity.Migrations;
     using DataAccess;
@@ -155,9 +156,20 @@ namespace TheGameApi.Migrations
             _itemTypeRepo.Save();
 
             //Recipes==================================================================================================================
-            var ShortRangeHandheldScannerRecipe = new Recipe() { Name = "Short Range Handheld Scanner Recipe",  };
-            _itemTypeRepo.InsertOrUpdate(LongRangeHandheldScanner);
-            _itemTypeRepo.Save();
+            var ShortRangeHandheldScannerRecipe = new Recipe() { Name = "Short Range Handheld Scanner Recipe",
+                RecipeJunkClasses = new List<RecipeJunkClass>()
+                {
+                    new RecipeJunkClass() { Id = Guid.NewGuid(), JunkClass = PowerStuff, MinimumEffectiveness = 1 },
+                    new RecipeJunkClass() { Id = Guid.NewGuid(), JunkClass = ConductiveStuff, MinimumEffectiveness = 1 },
+                    new RecipeJunkClass() { Id = Guid.NewGuid(), JunkClass = ComputerStuff, MinimumEffectiveness = 1 },
+                    new RecipeJunkClass() { Id = Guid.NewGuid(), JunkClass = StructuralStuff, MinimumEffectiveness = 1 },
+                    new RecipeJunkClass() { Id = Guid.NewGuid(), JunkClass = StickyStuff, MinimumEffectiveness = 1 },
+                    new RecipeJunkClass() { Id = Guid.NewGuid(), JunkClass = ButtonStuff, MinimumEffectiveness = 1 }
+                 },
+                OutputItem = ShortRangeHandheldScanner            
+            };
+            _recipeRepo.InsertOrUpdate(ShortRangeHandheldScannerRecipe)  ;
+            _recipeRepo.Save();
         }
     }
 }

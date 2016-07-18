@@ -2,7 +2,7 @@
 
 namespace TheGameApi.Models
 {
-    public class JunkType : Entity
+    public class JunkType : Entity, IIngredient
     {
         public string Name { get; set; }
         public string Description { get; set; }

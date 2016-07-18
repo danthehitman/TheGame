@@ -243,6 +243,7 @@
     <Compile Include="DataAccess\JunkClassRepository.cs" />
     <Compile Include="DataAccess\JunkRepository.cs" />
     <Compile Include="DataAccess\JunkTypeRepository.cs" />
+    <Compile Include="DataAccess\RecipeJunkClassRepository.cs" />
     <Compile Include="DataAccess\RecipeRepository.cs" />
     <Compile Include="DataAccess\Repository.cs" />
     <Compile Include="DataAccess\TheGameContext.cs" />
@@ -251,16 +252,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Controllers\EncountersController.cs" />
-    <Compile Include="Migrations\201607140614305_Initial.cs" />
-    <Compile Include="Migrations\201607140614305_Initial.Designer.cs">
-      <DependentUpon>201607140614305_Initial.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Discovery.cs" />
     <Compile Include="Models\Encounter.cs" />
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\GoogleLatLng.cs" />
-    <Compile Include="Models\Ingredient.cs" />
+    <Compile Include="Models\IIngredient.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ItemClass.cs" />
     <Compile Include="Models\ItemType.cs" />
@@ -270,6 +267,8 @@
     <Compile Include="Models\GeoEntity.cs" />
     <Compile Include="Models\Quality.cs" />
     <Compile Include="Models\Recipe.cs" />
+    <Compile Include="Models\RecipeItemClass.cs" />
+    <Compile Include="Models\RecipeJunkClass.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -334,11 +333,6 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201607140614305_Initial.resx">
-      <DependentUpon>201607140614305_Initial.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

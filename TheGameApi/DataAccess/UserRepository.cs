@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using TheGameApi.Core.Utilities;
 using TheGameApi.Models;
 
@@ -24,6 +21,10 @@ namespace TheGameApi.DataAccess
             if (entity.Password != null)
             {
                 entity.Password = PasswordStorage.CreateHash(entity.Password);
+            }
+            if (entity.EnrollDate == DateTime.MinValue)
+            {
+                entity.EnrollDate = DateTime.Now;
             }
             base.InsertOrUpdate(entity);
         }

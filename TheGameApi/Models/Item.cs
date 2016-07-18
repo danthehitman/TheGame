@@ -8,5 +8,6 @@
         public Quality Quality { get; set; }
         public User Owner { get; set; }
         public int Effectiveness { get; set; }
+        public int Uses { get; set; }
     }
 } 

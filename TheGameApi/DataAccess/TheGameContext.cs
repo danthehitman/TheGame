@@ -22,11 +22,11 @@ namespace TheGameApi.DataAccess
             .WithMany(t => t.Recipes);
 
             modelBuilder.Entity<Recipe>()
-           .HasMany(t => t.JunkClasses)
+           .HasMany(t => t.RecipeJunkClasses)
            .WithMany(t => t.Recipes);
 
             modelBuilder.Entity<Recipe>()
-            .HasMany(t => t.ItemClasses)
+            .HasMany(t => t.RecipeItemClasses)
             .WithMany(t => t.Recipes);
 
             modelBuilder.Entity<ItemType>()
@@ -50,6 +50,8 @@ namespace TheGameApi.DataAccess
         public DbSet<JunkType> JunkTypes { get; set; }
         public DbSet<JunkClass> JunkClasses { get; set; }
         public DbSet<Recipe> Recipes { get; set; }
+        public DbSet<RecipeJunkClass> RecipeJunkClasses { get; set; }
+        public DbSet<RecipeItemClass> RecipeItemClasses { get; set; }
     }
 
 }
