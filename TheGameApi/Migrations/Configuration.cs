@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 namespace TheGameApi.Migrations
 {
     using System;
@@ -31,19 +33,21 @@ namespace TheGameApi.Migrations
             _userRepo = new UserRepository(context);
             _recipeRepo = new RecipeRepository(context);
             _sessionRepo = new SessionRepository(context);
-            SeedStuff();
+            SeedStuffAsync().Wait();
         }
 
-        private void SeedStuff()
+        private async Task SeedStuffAsync()
         {
             //Users
             var UserDan = new User() { Email = "danthehitman@gmail.com", Password = "test", Name =  "ARKDJ" };
             _userRepo.InsertOrUpdate(UserDan);
-            _userRepo.Save();
+            await _userRepo.SaveAsync();
 
-            var SessionDan = new Session() { User = UserDan, Expires = DateTime.UtcNow.AddDays(2), Id = Guid.Parse("7EA9B445-F160-4F58-82E6-B87A333EF344") };
-            _sessionRepo.InsertOrUpdate(SessionDan);
-            _sessionRepo.Save();
+            var sesionGuid = Guid.Parse("7EA9B445-F160-4F58-82E6-B87A333EF344");
+            await _sessionRepo.DeleteAsync(sesionGuid);
+            var SessionDan = new Session() { User = UserDan, Expires = DateTime.UtcNow.AddDays(2), Id = sesionGuid };
+            _sessionRepo.InsertOrUpdate(SessionDan, true);
+            await _sessionRepo.SaveAsync();
 
             //Junk Classes===============================================================================================================
             var StickyStuff = new JunkClass() { Description = "Things for binding objects together.", Name = "Sticky Stuff" };
@@ -66,7 +70,7 @@ namespace TheGameApi.Migrations
             _junkClassRepo.InsertOrUpdate(ComputerStuff);
             var GeoStuff = new JunkClass() { Description = "Stuff that can be used to determine and track location.", Name = "Geo Stuff" };
             _junkClassRepo.InsertOrUpdate(GeoStuff);
-            _junkClassRepo.Save();
+            await _junkClassRepo.SaveAsync();
 
             //Junk Types=================================================================================================================
             //StickStuff
@@ -135,14 +139,14 @@ namespace TheGameApi.Migrations
             _junkTypeRepo.InsertOrUpdate(NerdKitGeoSensor);
             var HandHeldGps = new JunkType() { Name = "Handheld Gps Unit", Description = "Accurate and fast geo tracking.", Effectiveness = 10, Classes = new List<JunkClass>() { GeoStuff } };
             _junkTypeRepo.InsertOrUpdate(HandHeldGps);
-            _junkTypeRepo.Save();
+            await _junkTypeRepo.SaveAsync();
 
             //Item Classes===============================================================================================================
             var Satellites = new ItemClass() {Name = "Satellites", Description = "Orbital and 'Sub-Orbital' objects hurled through the air with rockets."};
             _itemClasseRepo.InsertOrUpdate(Satellites);
             var Scanners = new ItemClass() { Name = "Scanners", Description = "Used to reveal items and encounters in the world"};
             _itemClasseRepo.InsertOrUpdate(Scanners);
-            _itemClasseRepo.Save();
+            await _itemClasseRepo.SaveAsync();
 
             //ItemTypes==================================================================================================================
             //Satellites
@@ -159,7 +163,7 @@ namespace TheGameApi.Migrations
             _itemTypeRepo.InsertOrUpdate(ShortRangeHandheldScanner);
             var LongRangeHandheldScanner = new ItemType() { Name = "Long Range Handheld Scanner", ClassMultiplier = 2, Description = "A more advanced handheld device to reveal items on the map.  Limited uses.", Classes = new List<ItemClass>() { Scanners } };
             _itemTypeRepo.InsertOrUpdate(LongRangeHandheldScanner);
-            _itemTypeRepo.Save();
+            await _itemTypeRepo.SaveAsync();
 
             //Recipes==================================================================================================================
             var ShortRangeHandheldScannerRecipe = new Recipe() { Name = "Short Range Handheld Scanner Recipe",
@@ -175,7 +179,7 @@ namespace TheGameApi.Migrations
                 OutputItem = ShortRangeHandheldScanner            
             };
             _recipeRepo.InsertOrUpdate(ShortRangeHandheldScannerRecipe)  ;
-            _recipeRepo.Save();
+            await _recipeRepo.SaveAsync();
         }
     }
 }

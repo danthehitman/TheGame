@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Spatial;
+using System.Threading.Tasks;
 using DotSpatial.Topology;
 using TheGameApi.DataAccess;
 using TheGameApi.Models;
@@ -18,9 +19,9 @@ namespace TheGameApi.Core.Services
             _discoveryRepo = new DiscoveryRepository();
         }
 
-        public List<Discovery> GenerateDiscoveries(GoogleLatLng point, Guid itemId, User user)
+        public async Task<List<Discovery>> GenerateDiscoveriesAsync(GoogleLatLng point, Guid itemId, User user)
         {
-            var item = _itemRepo.Find(itemId);
+            var item = await _itemRepo.FindAsync(itemId);
             var bufferBase = 0.01;
             var bufferMultiplier = item.Effectiveness * item.Type.ClassMultiplier;
             var buffer = bufferBase * bufferMultiplier;
@@ -54,7 +55,7 @@ namespace TheGameApi.Core.Services
                     discoveries.Add(discovery);
                 }
             }
-            _discoveryRepo.Save();
+            await _discoveryRepo.SaveAsync();
             return discoveries;
         }
     }

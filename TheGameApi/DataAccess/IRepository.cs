@@ -1,21 +1,22 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace TheGameApi.DataAccess
 {
-    interface IRepository<T> : IDisposable
+    public interface IRepository<T> : IDisposable
     {
         IQueryable<T> All { get; }
 
         IQueryable<T> AllIncluding(params Expression<Func<T, object>>[] includeProperties);
 
-        T Find(Guid id);
+        Task<T> FindAsync(Guid id);
 
-        void InsertOrUpdate(T entity);
+        void InsertOrUpdate(T entity, bool forceInsert = false);
 
-        void Delete(Guid id);
+        Task DeleteAsync(Guid id);
 
-        void Save();
+        Task SaveAsync();
     }
 }

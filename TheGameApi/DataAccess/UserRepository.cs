@@ -16,7 +16,7 @@ namespace TheGameApi.DataAccess
             _entities = _context.Users;
         }
 
-        public override void InsertOrUpdate(User entity)
+        public override void InsertOrUpdate(User entity, bool forceInsert = false)
         {
             if (entity.Password != null)
             {

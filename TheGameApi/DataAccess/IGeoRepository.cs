@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity.Spatial;
+using System.Threading.Tasks;
 
 namespace TheGameApi.DataAccess
 {
-    interface IGeoRepository<T>
+    public interface IGeoRepository<T> : IRepository<T>
     {
         List<T> Find(DbGeometry geom);
     }

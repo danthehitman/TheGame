@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using TheGameApi.Models;
 
 namespace TheGameApi.DataAccess
@@ -29,16 +30,17 @@ namespace TheGameApi.DataAccess
                 _entities, (current, includeProperty) => current.Include(includeProperty));
         }
 
-        public T Find(Guid id)
+        public async Task<T> FindAsync(Guid id)
         {
-            return _entities.Find(id);
+            return await _entities.FindAsync(id);
         }
 
-        public virtual void InsertOrUpdate(T entity)
+        public virtual void InsertOrUpdate(T entity, bool forceInsert = false)
         {
-            if (entity.Id == null)
+            if (entity.Id == null || forceInsert)
             {
-                entity.Id = Guid.NewGuid();
+                if (entity.Id == null)
+                    entity.Id = Guid.NewGuid();
                 _entities.Add(entity);
             }
             else
@@ -47,15 +49,15 @@ namespace TheGameApi.DataAccess
             }
         }
 
-        public void Delete(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
-            var entity = _context.Items.Find(id);
-            _context.Items.Remove(entity);
+            var entity = await _entities.FindAsync(id);
+            _entities.Remove(entity);
         }
 
-        public void Save()
+        public async Task SaveAsync()
         {
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         void IDisposable.Dispose()
