@@ -17,6 +17,8 @@ namespace TheGameApi.Migrations
         private UserRepository _userRepo;
         private RecipeRepository _recipeRepo;
         private SessionRepository _sessionRepo;
+        private ItemRepository _itemRepository;
+
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
@@ -33,6 +35,7 @@ namespace TheGameApi.Migrations
             _userRepo = new UserRepository(context);
             _recipeRepo = new RecipeRepository(context);
             _sessionRepo = new SessionRepository(context);
+            _itemRepository = new ItemRepository(context);
             SeedStuffAsync().Wait();
         }
 
@@ -180,6 +183,17 @@ namespace TheGameApi.Migrations
             };
             _recipeRepo.InsertOrUpdate(ShortRangeHandheldScannerRecipe)  ;
             await _recipeRepo.SaveAsync();
+
+            var DansShortRangeHandheldScanner = new Item()
+            {
+                Id = Guid.Parse("51E195C0-42B8-4CC6-B3DB-E7E8F04E52F9"),
+                Name = "Dan's Scanner",
+                Effectiveness = 1,
+                Type = ShortRangeHandheldScanner,
+                Uses = 10000
+            };
+            _itemRepository.InsertOrUpdate(DansShortRangeHandheldScanner);
+            await _itemRepository.SaveAsync();
         }
     }
 }

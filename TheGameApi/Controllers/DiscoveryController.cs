@@ -9,6 +9,7 @@ using TheGameApi.Models;
 
 namespace TheGameApi.Controllers
 {
+    [RoutePrefix("/rest/discovery")]
     public class DiscoveryController : ApiController
     {
         private IDiscoveryRepository _discoveryRepo;
@@ -24,7 +25,7 @@ namespace TheGameApi.Controllers
             return _discoveryRepo.All;
         }
 
-        [Route("/api/discovery/generate")]
+        [Route("generate")]
         public async Task<IEnumerable<Discovery>> PostGenerateDiscoveriesAsync([FromBody]DiscoveryGenerateDto dto)
         {
             var user = new AuthService().GetUserFromToken(ControllerUtilities.GetAuthToken(Request));
@@ -36,7 +37,7 @@ namespace TheGameApi.Controllers
         {
             return await _discoveryRepo.FindAsync(id);
         }
-
+        
         // POST: api/Discovery
         public async Task PostAsync([FromBody]Discovery value)
         {

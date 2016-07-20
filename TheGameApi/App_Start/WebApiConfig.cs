@@ -16,7 +16,6 @@ namespace TheGameApi
             container.RegisterType<TheGameContext, TheGameContext>(new HierarchicalLifetimeManager());
             container.RegisterType<IDiscoveryRepository>(new ContainerControlledLifetimeManager(),
                new InjectionFactory(c => new DiscoveryRepository(c.Resolve<TheGameContext>())));
-            container.RegisterType<IDiscoveryRepository, DiscoveryRepository>(new HierarchicalLifetimeManager());
             config.DependencyResolver = new UnityResolver(container);
 
             // Web API routes
