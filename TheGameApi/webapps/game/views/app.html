@@ -1,0 +1,10 @@
+﻿<div id="integraAppDiv">
+    <!-- ko if: configurationLoaded() == false-->
+    <div data-bind="compose: '/webapps/game/views/loginview.html'"></div>
+    <!-- /ko -->
+    <div id="integraMapAppDiv" data-bind="style: {'display': userConnected() ? 'inline-block' : 'none'} ">
+        <div data-bind="compose: '/webapps/game/views/headerview.html'"></div>
+        <div data-bind="compose: '/webapps/game/views/northcontentview.html'"></div>
+        <div data-bind="compose: southContentViewModel"></div>
+    </div>
+</div>

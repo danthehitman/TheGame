@@ -22,7 +22,7 @@ namespace TheGameApi.Core.Services
         public async Task<List<Discovery>> GenerateDiscoveriesAsync(GoogleLatLng point, Guid itemId, User user)
         {
             var item = await _itemRepo.FindAsync(itemId);
-            var bufferBase = 0.01;
+            var bufferBase = 0.001;
             var bufferMultiplier = item.Effectiveness * item.Type.ClassMultiplier;
             var buffer = bufferBase * bufferMultiplier;
 
@@ -37,7 +37,9 @@ namespace TheGameApi.Core.Services
             var ne = env.TopRight();
 
             var rand = new Random();
-            for (var i = 0; i < 100; i++)
+
+            var max = GetMaxForScannerRadiusAndEffectiveness(bufferMultiplier, item.Effectiveness);
+            for (var i = 0; i <= max; i++)
             {
                 var ptLat = rand.NextDouble() * (ne.X - sw.X) + sw.X;
                 var ptLng = rand.NextDouble() * (ne.Y - sw.Y) + sw.Y;
@@ -48,7 +50,7 @@ namespace TheGameApi.Core.Services
                     var discovery = new Discovery()
                     {
                         Date = DateTime.UtcNow,
-                        Discoverer = user,
+                        DiscovererId = user.Id,
                         Geometry = DbGeometry.FromText(p.ToText())
                     };
                     _discoveryRepo.InsertOrUpdate(discovery);
@@ -58,5 +60,12 @@ namespace TheGameApi.Core.Services
             await _discoveryRepo.SaveAsync();
             return discoveries;
         }
+
+        private int GetMaxForScannerRadiusAndEffectiveness(int multiplier, int effectiveness)
+        {
+            var maxBase = 5;
+            return (int)Math.Round((maxBase * (effectiveness * .5)) * multiplier);
+        }
+
     }
 }

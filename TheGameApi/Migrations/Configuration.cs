@@ -42,12 +42,17 @@ namespace TheGameApi.Migrations
         private async Task SeedStuffAsync()
         {
             //Users
+
             var UserDan = new User() { Email = "danthehitman@gmail.com", Password = "test", Name =  "ARKDJ" };
             _userRepo.InsertOrUpdate(UserDan);
             await _userRepo.SaveAsync();
 
             var sesionGuid = Guid.Parse("7EA9B445-F160-4F58-82E6-B87A333EF344");
-            await _sessionRepo.DeleteAsync(sesionGuid);
+            try
+            {
+                await _sessionRepo.DeleteAsync(sesionGuid);
+            }
+            catch { }
             var SessionDan = new Session() { User = UserDan, Expires = DateTime.UtcNow.AddDays(2), Id = sesionGuid };
             _sessionRepo.InsertOrUpdate(SessionDan, true);
             await _sessionRepo.SaveAsync();
@@ -184,15 +189,21 @@ namespace TheGameApi.Migrations
             _recipeRepo.InsertOrUpdate(ShortRangeHandheldScannerRecipe)  ;
             await _recipeRepo.SaveAsync();
 
+            var userId = Guid.Parse("51E195C0-42B8-4CC6-B3DB-E7E8F04E52F9");
+            try
+            {
+                await _itemRepository.DeleteAsync(userId);
+            }
+            catch { }
             var DansShortRangeHandheldScanner = new Item()
             {
-                Id = Guid.Parse("51E195C0-42B8-4CC6-B3DB-E7E8F04E52F9"),
+                Id = userId,
                 Name = "Dan's Scanner",
                 Effectiveness = 1,
                 Type = ShortRangeHandheldScanner,
                 Uses = 10000
             };
-            _itemRepository.InsertOrUpdate(DansShortRangeHandheldScanner);
+            _itemRepository.InsertOrUpdate(DansShortRangeHandheldScanner, true);
             await _itemRepository.SaveAsync();
         }
     }

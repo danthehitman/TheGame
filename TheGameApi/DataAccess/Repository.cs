@@ -55,6 +55,21 @@ namespace TheGameApi.DataAccess
             _entities.Remove(entity);
         }
 
+        public async Task DeleteAllAsync()
+        {
+            await _context.Database.ExecuteSqlCommandAsync($"TRUNCATE TABLE {_context.GetTableName<T>()}");
+        }
+
+        public async Task DropSchema(string schemaName)
+        {
+            await _context.Database.ExecuteSqlCommandAsync($"DROP SCHEMA {schemaName}");
+        }
+
+        public async Task CreateSchema(string schemaName)
+        {
+            await _context.Database.ExecuteSqlCommandAsync($"CREATE SCHEMA {schemaName}");
+        }
+
         public async Task SaveAsync()
         {
             await _context.SaveChangesAsync();

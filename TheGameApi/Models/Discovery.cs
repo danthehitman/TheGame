@@ -6,5 +6,6 @@ namespace TheGameApi.Models
     {
         public DateTime Date { get; set; }
         public User Discoverer { get; set; }
+        public Guid? DiscovererId { get; set; }
     }
 }

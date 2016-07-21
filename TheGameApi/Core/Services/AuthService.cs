@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using TheGameApi.DataAccess;
 using TheGameApi.Models;
@@ -16,7 +17,7 @@ namespace TheGameApi.Core.Services
 
         public User GetUserFromToken(Guid token, bool requireActive = true)
         {
-            var session = _sessionRepo.All.Where(s => s.Id == token && requireActive ? s.Expires <= DateTime.UtcNow : true).FirstOrDefault();
+            var session = _sessionRepo.All.Include(c => c.User).Where(s => s.Id == token && requireActive ? s.Expires >= DateTime.UtcNow : true).FirstOrDefault();
             if (session != null)
                 return session.User;
             return null;

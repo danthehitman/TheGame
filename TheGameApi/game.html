@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <!--<script type="text/javascript" src="https://getfirebug.com/firebug-lite-debug.js"></script>-->
+    <title>The Game</title>
+    <script src="https://apis.google.com/js/auth.js"></script>
+    <script>
+        require = {
+            urlArgs: "v=" + "[UICACHEVERSION]"
+        };
+    </script>
+    <![if !ie]>
+    <link rel="stylesheet" href="webapps/common/css/modern.css?v=[UICACHEVERSION]" title="contemporary" type="text/css">
+    <![endif]>
+
+    <link rel="stylesheet" type="text/css" href="webapps/common/css/app.css?v=[UICACHEVERSION]" media="screen" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+    <meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, target-densitydpi=device-dpi" />
+    <link rel="stylesheet" href="webapps/libs/durandal/css/durandal.css" />
+    <link rel="stylesheet" href="webapps/libs/font-awesome/css/font-awesome.min.css" />
+    <link rel="icon" href="/favicon.ico?v=3" type="image/x-icon" />
+    <link rel="shortcut icon" href="/favicon.ico?v=3" type="image/x-icon" />
+</head>
+<body>
+    <div id="applicationHost">
+    </div>
+
+    <script src="webapps/libs/require/require.js" data-main="webapps/game/main"></script>
+
+</body>
+</html>

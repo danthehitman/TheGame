@@ -17,6 +17,12 @@ namespace TheGameApi.DataAccess
 
         Task DeleteAsync(Guid id);
 
+        Task DeleteAllAsync();
+
+        Task DropSchema(string schemaName);
+
+        Task CreateSchema(string schemaName);
+
         Task SaveAsync();
     }
 }

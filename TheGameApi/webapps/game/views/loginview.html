@@ -1,0 +1,12 @@
+﻿<div id="ilMapsLoginContainer">
+    <div>
+        <img src="images/ilmaps_loginlogo.png" />
+    </div>
+    <div id="splashloginbuttoncontainer">
+        <a href="#" class="ilmaps-splash-logincontainer" data-bind="click: handleAuthButtonClick,
+                      text: authButtonText">Login</a>
+    </div>
+    <div id="splashLoginFailure" data-bind="slideVisible: loginErrorMessage != null, type: 'vert'">
+        <div data-bind="text: loginErrorMessage"></div>
+    </div>
+</div>

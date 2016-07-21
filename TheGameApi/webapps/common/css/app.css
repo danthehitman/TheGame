@@ -1,0 +1,1479 @@
+﻿body {
+    font-family:Arial;
+}
+
+select {
+        border: 1px solid #65A6BA;
+        font-size: 11px;
+        margin-left: 22px;
+        width: 166px;
+        overflow:visible ;
+    }
+
+/*select:focus { 
+    width:auto ;
+    position:relative ;
+}*/
+
+.tooltips {
+    padding:8px;
+	position:absolute;
+	z-index:9999;
+	-o-box-shadow: 0 0 5px #aaa;
+	-moz-box-shadow: 0 0 5px #aaa;
+	-webkit-box-shadow: 0 0 5px #aaa;
+	box-shadow: 0 0 5px #aaa;
+    background-color:black;
+    color:white;
+    border-radius:2px;
+    border:1px solid white;
+}
+
+#integraAppDiv
+{
+    position:absolute;
+    top:0px;
+    bottom:0px;
+    left:0px;
+    right:0px;
+}
+
+#ilMapsLoginContainer {
+    position:relative;
+    margin:auto;
+    width:400px;
+    height:100px;
+    /*display:none;*/
+    top:200px;
+}
+
+#splashloginbuttoncontainer {
+    margin:auto;
+    width:100px;
+}
+
+#splashLoginFailure {
+    color:gray;
+    margin-top:20px;
+}
+
+.ilmaps-splash-logincontainer {
+	-moz-box-shadow:inset 0px 1px 0px 0px #97c4fe;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #97c4fe;
+	box-shadow:inset 0px 1px 0px 0px #97c4fe;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #3d94f6), color-stop(1, #1e62d0) );
+	background:-moz-linear-gradient( center top, #3d94f6 5%, #1e62d0 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#3d94f6', endColorstr='#1e62d0');
+	background-color:#3d94f6;
+	-webkit-border-top-left-radius:0px;
+	-moz-border-radius-topleft:0px;
+	border-top-left-radius:0px;
+	-webkit-border-top-right-radius:0px;
+	-moz-border-radius-topright:0px;
+	border-top-right-radius:0px;
+	-webkit-border-bottom-right-radius:0px;
+	-moz-border-radius-bottomright:0px;
+	border-bottom-right-radius:0px;
+	-webkit-border-bottom-left-radius:0px;
+	-moz-border-radius-bottomleft:0px;
+	border-bottom-left-radius:0px;
+	text-indent:0;
+	border:1px solid #337fed;
+	display:inline-block;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:16px;
+	font-weight:bold;
+	font-style:normal;
+	height:40px;
+	line-height:40px;
+	width:100px;
+	text-decoration:none;
+	text-align:center;
+	text-shadow:1px 1px 0px #1570cd;
+}
+
+.ilmaps-splash-logincontainer:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #1e62d0), color-stop(1, #3d94f6) );
+	background:-moz-linear-gradient( center top, #1e62d0 5%, #3d94f6 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#1e62d0', endColorstr='#3d94f6');
+	background-color:#1e62d0;
+}.ilmaps-splash-logincontainer:active {
+	position:relative;
+	top:1px;
+}
+
+#integraMapAppDiv
+{
+    display:none;
+    position:absolute;
+    top:0px;
+    bottom:0px;
+    right:0px;
+    left:0px;
+}
+
+#appHeaderDiv
+{
+    height: 32px;
+    background-color: black;
+    position:relative;
+    padding: 8px 0px 0px 2px;
+}
+
+#appHeadRightDiv
+{ 
+    position:relative;
+    float:right;
+    clear:left;
+}
+
+#appHeadLeftDiv {
+    float:left;
+
+}
+
+#searchDiv
+{
+    display:inline-block;
+    position:relative;
+    top:0px;
+    left:0px;
+    float:left;
+}
+
+#searchBox
+{
+    left:3px;
+    position:relative;
+    width:200px;
+}
+
+#searchLimitByExtentLabel {
+    color:white;
+}
+
+#searchButton
+{
+    position:relative;
+    top:5px;
+    left: 3px;
+    width:20px;
+    height:20px;
+    display:inline-block;
+    background-image: url(/images/search_small.png);
+    text-decoration: none;
+}
+
+#searchButton:hover
+{
+    background-image: url(/images/search_small_over.png);
+    cursor:pointer;
+}
+
+.ilmapsMobileToolHeaderDiv {
+    display:none;
+    z-index:50000;
+    position:absolute;
+    right:5px;
+    top:35px;
+    background-color:black;
+    padding:2px;
+    margin-right:5px;
+    margin-left:5px;
+    text-align:right;
+}
+
+.ilmapsDesktopToolHeaderDiv {
+    float:right;
+}
+
+#ilmapsMobileMenuButton {
+    display:none;
+    position:relative;
+    right:5px;
+    width:20px;
+    height:20px;
+    background-image: url(/images/menu.png);
+    float:right;
+}
+
+#appNotificationContainer {
+    padding-top:2px;
+}
+#notificationHistoryButtonContainer {
+    color:gray;
+    font-size:17px;
+    cursor:pointer;
+}
+    #notificationHistoryButtonContainer:hover {
+        color:white;
+    }
+
+#notificationTextContainer {
+    display:none;
+    overflow:hidden;
+    height:20px;
+    width:300px;
+}
+
+#notificationHistoryContainer {
+    position:absolute;
+    left:260px;
+    top: 28px;
+    z-index: 50000;
+    background-color:white;
+    color:black;
+    box-shadow: 0 2px 10px rgba(0,0,0,.2);
+    border:1px solid black;
+    width:600px;
+    height:200px;
+    padding:5px;
+    display:none;
+    overflow:auto;
+}
+
+#loginLink
+{   
+    position:relative;
+    float:left;
+    top:2px;
+    right:3px;
+}
+    #loginLink:hover {
+        text-decoration:underline;
+    }
+
+#logoutLink
+{   
+    color:#3a84df;
+    cursor:pointer;
+    float:right;
+}
+    #logoutLink:hover {
+        text-decoration:underline;
+    }
+
+#infoButton:hover
+{
+    background-image: url(/images/info_small_over.png);
+}
+
+#zoomCurrentLocationButton
+{
+    position:absolute;
+    bottom:65px;
+    right: 3px;
+    width:30px;
+    height:30px;
+    background: url(/images/zoom_to_dan.png) 0 0/ 30px no-repeat;
+    cursor:pointer;
+    z-index: 1000;
+    margin: 5px;
+}
+
+#notficationContainer
+{
+    color:white;
+    cursor:pointer;
+}
+
+/*=====================Results Window=====================*/
+
+#resultsWindow
+{
+    display:none;
+    width: 400px;
+    position:absolute;
+    top: 5px;
+    bottom:30px;
+    left: 0px;
+    z-index: 2000;
+    background:white;
+    border-width: 0px 2px 2px 2px;
+    border-style: solid;
+    border-color: black;
+    font-family:Arial;
+    padding:2px;
+    opacity:0.9;
+}
+
+#resultsWindow:hover{
+    opacity:0.9;
+}
+
+#resultsContainerHeader
+{
+    height:30px;
+    position:absolute;    
+    top:0px;
+    right:0px;
+    left:0px;
+    background-color:black;
+}
+
+#resultsContainerPagingHeader
+{
+    position:absolute;
+    top:30px;
+    right:0px;
+    left:0px;
+    background-color:gray;
+    padding-top: 7px;
+    padding-bottom:4px;
+    padding-left:10px;
+}
+
+#resultsHeaderTextContainer
+{
+    position:relative;
+    color:white;
+    top:-4px;
+}
+
+.resultsWindowPagingButtons {
+    display:inline-block;
+    cursor:pointer;
+}
+    .resultsWindowPagingButtons.disabled {
+        cursor:auto;
+        color:darkgray;
+    }
+
+#resultsHeaderGroupButtonLink {
+    color:gray;
+    cursor:pointer;
+    position:relative;
+    top:-4px;
+    left:5px;
+}
+
+#resultWindowIcon
+{
+    left:0px;
+    top:3px;
+    position:relative;
+    width:25px;
+    height:25px;
+    background-image: url(/images/resultstoolicon25.png);
+    background-size: 25px 25px;
+    background-repeat:no-repeat;
+    display:inline-block;
+}
+
+.resultsContainerBody
+{    
+    overflow:scroll;
+    position:absolute;
+    top:30px;
+    left:2px;
+    right:0px;
+    bottom:0px;
+    font-family:Arial;
+}
+    .resultsContainerBody.paged {
+        top:60px;
+    }
+
+
+.resultGroupHeader
+{
+    border-style: solid;
+    border-width: 2px;
+    border-color: white;
+    color:white;
+    background-color:#3A84DF;
+    font-family:Arial;
+    font-weight: bold;
+    font-style:italic;
+    cursor:default;
+    height:auto;
+}
+    .resultGroupHeader.places {
+        background-color:#0E916D;
+    }
+    .resultGroupHeader.linearref {
+        background-color:#FF7C32;
+    }
+.resultGroupHeader:hover
+{
+    background-color:#6AA7EF;
+}
+    .resultGroupHeader.places:hover {
+        background-color:#40C883;
+    }
+    .resultGroupHeader.linearref:hover {
+        background-color:#FF9D65;
+    }
+
+.resultsGroupHeaderLineRefValue {
+    color:black;
+    font-size:15px;
+}
+
+.searchTipsContainer {
+    padding-left:5px;
+}
+
+.resultSummaryTextContainer {
+}
+
+.resultExtendedSummaryTextContainer {
+    color:gray;
+    font-size:14px;
+}
+
+.resultSummaryTooltipFlag {
+}
+
+.resultHeaderContainer
+{    
+    background-color:white;
+    color:black;    
+    padding:6px 0px 8px 0px;
+    cursor:default;
+    width:100%;
+}
+.resultHeaderContainer:hover
+{
+    background-color: lightgray;
+}
+
+.resultFeatureTypeHeaderContainer
+{
+    color:rgb(58, 132, 223);
+    font-weight:bold;
+    font-family:Arial;
+    padding:2px 4px 2px 0px;
+    cursor:default;
+}
+.resultFeatureTypeHeaderContainer:hover
+{
+    background-color: lightgray;
+}
+.resultContainer
+{
+    display:none;
+    font-family:Arial;
+    padding-bottom:10px;
+    font-size:smaller;
+    cursor:default;
+    position:relative;
+    right:0px;
+}
+
+.resultSearchIndexText 
+{
+    font-size: smaller;
+    color: gray;
+}
+
+.resultAttributeLabel {
+    color:gray;
+    font-size:smaller;
+}
+
+.resultAttributeValue {
+    font-size:smaller;
+}
+
+/*===============Results Toolbar==================*/
+
+.resultToolContainer
+{
+    position:relative;
+    right:5px;
+    float:right;
+    /*clear:right;*/
+    display:none;
+    vertical-align:central;
+    /*padding: 1px 2px 0px 0px;*/
+}
+
+.resultFlashToolButton
+{
+    position:relative;
+    width:16px;
+    height:16px;
+    background-size: 16px 16px;
+    background-repeat:no-repeat;
+    display:inline-block;
+    text-decoration: none;    
+    cursor:pointer;
+    background-image: url(/images/bolt_16x16.png);
+}
+
+.resultExpandToolButton
+{    
+    position:relative;
+    width:16px;
+    height:16px;
+    cursor:default;    
+    background-repeat: no-repeat;
+    background-size: 16px 16px;
+    display:inline-block;
+    text-decoration: none;    
+    cursor:pointer;
+}
+.resultExpandToolButton.expanded
+{
+    background-image: url(/images/ddarrow_up.png);
+}
+.resultExpandToolButton.collapsed
+{
+    background-image: url(/images/ddarrow_down.png);
+}
+
+.resultMapToolButton
+{
+    position:relative;
+    width:16px;
+    height:16px;
+    background-size: 16px 16px;
+    background-repeat:no-repeat;
+    display:inline-block;
+    text-decoration: none;    
+    cursor:pointer;
+}
+
+.resultMapToolButton.on
+{
+    background-image: url(/images/crosshair_small_black.png);
+}
+.resultMapToolButton.off
+{
+    background-image: url(/images/crosshair_small_black_hollow.png);
+}
+.resultMapToolButton.partial
+{
+    background-image: url(/images/crosshair_small_black_half.png);
+}
+
+.resultDirectionsMapToolButton
+{
+    position:relative;
+    width:16px;
+    height:16px;
+    background-image: url(/images/directions.png);
+    background-size: 16px 16px;
+    background-repeat:no-repeat;
+    display:inline-block;
+    text-decoration: none;    
+    cursor:pointer;
+}
+
+.resultClearMapToolButton
+{
+    position:relative;
+    width:20px;
+    height:20px;
+    background-image: url(/images/crosshair_small_black_no.png);
+    background-size: 20px 20px;
+    background-repeat:no-repeat;
+    display:inline-block;
+    text-decoration: none;    
+    cursor:pointer;
+}
+
+#resultClearMapToolButtonContainer
+{
+    position:absolute;
+    right:20px;
+    padding-top:5px;
+}
+
+#loadingContainer
+{
+    height: 200px;
+    width: 300px;
+    position:absolute;
+    z-index: 3000;
+    top: 50%;
+    left: 50%;
+    background: gray;
+}
+
+#helpIconContainer
+{
+    position:relative;
+    color:white;
+    cursor:pointer;    
+    float:right;
+    margin-right:5px;
+}
+
+#userIconContainer
+{
+    position:relative;
+    color:white;
+    cursor:pointer;    
+    float:right;
+    margin-right:5px;
+}
+
+#currentUserLabel
+{
+    position:relative;
+    top:2px;
+}
+
+#refreshSiteViewButtonContainer 
+{
+    height:18px;
+    width:18px;
+    background-image: url(/images/refresh_icon_white_18x18.png);
+    display:inline-block;
+    margin-top:1px;
+    margin-right:5px;
+    cursor:pointer;
+    float:right;
+}
+
+#siteViewSelectorContainer
+{
+    position:relative;
+    float:right;
+    margin-right:5px;
+}
+#coordinateDisplayContainer
+{
+    color:white;
+    background: gray;
+    position: absolute;
+    z-index: 3000;
+    bottom: 5px;
+    left: 5px;
+    padding: 0 3px 0 3px;
+}
+
+#siteViewSelector {
+    border: 1px solid #000;
+    font-size: 14px;
+    color: #fff;
+    background: #555;
+    padding: 1px;
+    max-width: 200px;
+    width: 200px;
+    margin-left: 2px;
+}
+
+#siteViewSelectorLabel {
+    color: white;
+    cursor: pointer;
+}
+
+.ilHeaderVertSeparator {
+    position:relative;
+    float:right;
+    display:inline-block;
+    height:22px;
+    border-left:1px solid gray;
+    right:5px;
+    margin-left:6px;
+}
+
+.horizontal-line {
+background: #e6e6e6;
+border: none;
+height: 1px;
+margin: 8px 0;
+}
+
+/*========================Viewer Container===========================*/
+
+#viewerWindow
+{
+    display:none;
+    width: 400px;
+    position:absolute;
+    top: 5px;
+    bottom:30px;
+    left: 410px;
+    z-index: 2000;
+    background:white;
+    border-width: 0px 2px 2px 2px;
+    border-style: solid;
+    border-color: black;
+    font-family:Arial;
+    padding:5px;
+    opacity:0.6;
+
+}
+#viewerContainerBody
+{    
+    overflow:scroll;
+    position:absolute;
+    top:30px;
+    left:0px;
+    right:0px;
+    bottom:0px;
+    font-family:Arial;
+}
+#viewerWindow:hover{
+    opacity:0.9;
+}
+#viewerContainerHeader
+{
+    height:30px;
+    position:absolute;
+    top:0px;
+    left:0px;    
+    right:0px;
+    bottom:0px;
+    background-color:black;
+}
+#viewerHeaderTextContainer
+{
+    position:absolute;
+    left: 5px;
+    top: 5px;
+    color:white;
+}
+
+/*========================Ops Container===========================*/
+
+#opsWindow
+{
+    display:none;
+    width: 400px;
+    position:absolute;
+    top: 5px;
+    bottom:30px;
+    left: 0px;
+    z-index: 2000;
+    background:white;
+    border-width: 0px 2px 2px 2px;
+    border-style: solid;
+    border-color: black;
+    font-family:Arial;
+    padding:5px;
+    opacity:0.9;
+
+}
+#opsContainerBody
+{    
+    overflow:scroll;
+    position:absolute;
+    top:30px;
+    left:0px;
+    right:0px;
+    bottom:0px;
+    font-family:Arial;
+}
+#opsWindow:hover{
+    opacity:0.9;
+}
+
+#opsContainerHeader
+{
+    height:30px;
+    position:absolute;
+    top:0px;
+    left:0px;    
+    right:0px;
+    bottom:0px;
+    background-color:black;
+}
+
+#opsWindowIcon
+{
+    left:0px;
+    top:3px;
+    position:absolute;
+    width:25px;
+    height:25px;
+    background-image: url(/images/formicon25.png);
+    background-size: 25px 25px;
+    background-repeat:no-repeat;
+    display:inline-block;
+}
+
+#fieldDashboardRefreshButton
+{
+    right:30px;
+    top:3px;
+    position:absolute;
+    width:20px;
+    height:20px;
+    background-image: url(/images/refresh.png);
+    background-size: 20px 20px;
+    background-repeat:no-repeat;
+    display:inline-block;
+    cursor:pointer;
+}
+
+#opsHeaderTextContainer
+{
+    position:absolute;
+    left: 30px;
+    top: 5px;
+    color:white;
+}
+
+#opsDashControlPanel 
+{
+    background-color:slategray;
+    color:white;
+    border: 1px solid white;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.opsSectionHeader
+{
+    border-style: solid;
+    border-width: 2px;
+    border-color: white;
+    color:white;
+    background-color:gray;
+    font-family:Arial;
+    font-weight: bold;
+    font-style:italic;
+    cursor:default;
+}
+.opsGroupHeader
+{
+    border-style: solid;
+    border-width: 2px;
+    border-color: white;
+    color:white;
+    background-color:#3A84DF;
+    font-family:Arial;
+    font-style:italic;
+    cursor:default;
+}
+.opsGroupHeader.red
+{
+    background-color: red;
+}
+.opsGroupHeader.yellow
+{
+    background-color: yellow;
+    color:black;
+}
+.opsGroupHeader.green
+{
+    background-color: green;
+}
+.opsResultContainer
+{
+    display:none;
+    font-family:Arial;
+    padding-bottom:10px;
+    font-size:smaller;
+    cursor:default;
+    position:relative;
+    right:0px;
+}
+.opsResultHeaderContainer
+{    
+    background-color:white;
+    color:black;    
+    padding:2px 0px 2px 0px;
+    cursor:default;
+    width:100%;
+}
+.opsResultDetailsContainer
+{
+    font-family:Arial;
+    padding-bottom:10px;
+    font-size:smaller;
+    cursor:default;
+    position:relative;
+    padding-left:10px;
+}
+
+/*=====================Left Nav Tool Bar======================*/
+#leftNavContainer
+{
+    width: 45px;
+    position:absolute;
+    top: 5px;
+    bottom:30px;
+    left: 0px;
+    z-index: 2000;
+    background-color:transparent;
+}
+
+#leftNavResultsButton
+{
+    position:absolute;
+    top:2px;
+    left:5px;
+    width:40px !important;
+    height:40px !important;
+    background-image: url(/images/resultstoolicon.png);
+    text-decoration: none;    
+    cursor:pointer;
+    display:none;
+}
+#leftNavOpsButton
+{
+    position:absolute;
+    top:47px;
+    left:5px;
+    width:40px !important;
+    height:40px !important;
+    background-image: url(/images/formicon40.png);
+    text-decoration: none;    
+    cursor:pointer;
+    display:none;
+}
+
+#leftNavPrototypeButton
+{
+    position:absolute;
+    top:92px;
+    left:5px;
+    width:40px !important;
+    height:40px !important;
+    background-image: url(/images/form_marker40.png);
+    text-decoration: none;    
+    cursor:pointer;
+    display:none;
+}
+
+.collapseWindowButton
+{
+    position:absolute;
+    top:2px;
+    right:2px;
+    width:14px !important;
+    height:23px !important;
+    background-image: url(/images/collapse_left.png);
+    text-decoration: none;    
+    cursor:pointer;
+}
+
+#mapContainer
+{
+    position:absolute;
+    top: 0px;
+    bottom:0px;
+    left: 0px;
+    right:0px;
+}
+
+
+
+#southContentContainer
+{
+    position:absolute;
+    bottom:0px;
+    left:0px;
+    right:0px;
+    display: none;
+}
+
+#closeSouthContentButton 
+{
+    position:absolute;
+    top:6px;
+    right:1px;
+    height:28px;
+    width:28px;
+    background-image: url(/images/closex.png);
+    text-decoration: none;
+}
+
+#southContentHeader 
+{
+    height:5px;
+    background-color:black;
+    color:white;
+    right:0px;
+    left:0px;
+}
+
+/*#southContentBody 
+{
+    height:240px;
+}*/
+
+.ilFieldLabel {
+    color:gray;
+}
+
+.updateStatusButton {
+    background-color:red;
+    border-radius:3px;
+    padding: 3px;
+    color:white;
+    cursor:pointer;
+}
+.updateStatusNotificationText {
+    color:red;
+}
+
+#ilMapsAppsButton {
+    position:relative;
+    top:2px;
+    margin-right:5px;
+    width:20px;
+    height:20px;
+    background: url(/images/appsdots.png);
+    text-decoration: none;    
+    cursor:pointer;
+    float:right;
+}
+
+#ilMapsAppsButtonWindow {
+    position:absolute;
+    right:5px;
+    top:26px;
+    height:115px;
+    background-color:white;
+    border:1px solid black;
+    display:none;
+    z-index:50000;
+    box-shadow: 0 2px 10px rgba(0,0,0,.2);
+}
+
+.ilMapsAppsButtonText {
+    color:black;
+    font-size:12px;
+}
+
+.ilMapsAppsButtonContainer {
+    width:80px;
+    float:left;
+    margin-top:10px;
+    text-align:center;
+    cursor:pointer;
+}
+
+.ilMapsAppsButtonImageContainer {
+    position:relative;
+    height:48px;
+    width:48px;
+    left:16px;
+}
+
+.ilMapAppsHorBar {
+    clear:left;
+    height: 1px;
+    display: inline-block;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #cccccc;
+    font-size: 1px;
+    width: 100%;
+}
+
+#ilMapAppsSettingsButton {
+    position:absolute;
+    right:5px;
+    color:#3a84df;
+    cursor:pointer;
+    font-size:13px;
+}
+    #ilMapAppsSettingsButton:hover {
+        text-decoration:underline;
+    }
+
+#ilMapAppsSettingsWindow {
+    position:relative;
+    right:1px;
+    top:23px;
+    height:45px;
+    width:255px;
+    background-color:white;
+    border:1px solid black;
+    border-top:none;
+    display:none;
+    z-index:50000;
+}
+
+.ilMapAppsSettingsContainer {
+    color:gray;
+    position:relative;
+    right:5px;
+    float:right;
+    clear:both;
+}
+
+.ilMapAppsSettingLinkButton {
+    cursor:pointer;
+}
+    .ilMapAppsSettingLinkButton:hover {
+        text-decoration: underline;
+    }
+
+#mapLayersDropDownContainer {
+    display:none; margin: 5px; z-index: 1000; position: absolute; cursor: pointer; text-align: left; width: 85px; right: 160px; top: 0px;
+}
+  /*======Moved to browser specific files.
+#mapLayersDropDownButton 
+*/
+    #mapLayersDropDownButton:hover {
+        background-color:rgb(235, 235, 235);
+    }
+#mapLayersDropDownContent {
+    width:220px; top: 2px; right:135px; background-color: white; z-index: -1; padding-top: 2px; -webkit-background-clip: padding-box; background-clip: padding-box; border-width: 0px 1px 1px; border-right-style: solid; border-bottom-style: solid; border-left-style: solid; border-right-color: rgba(0, 0, 0, 0.14902); border-bottom-color: rgba(0, 0, 0, 0.14902); border-left-color: rgba(0, 0, 0, 0.14902); -webkit-box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px; box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px; position: relative; text-align: left; display: none;
+}
+#mapLayersDropDownArrow {
+    -webkit-user-select: none; border: 0px; padding: 0px; margin: -2px 0px 0px; position: absolute; right: 6px; top: 50%; width: 7px; height: 4px;
+}
+
+.ilMapAppsSettingsLinkButton {
+    cursor:pointer;
+}
+    .ilMapAppsSettingsLinkButton:hover {
+        text-decoration:underline;
+    }
+
+.ilMapManageLayersLabel {
+    font-family: Roboto, Arial, sans-serif;  font-size: 11px;
+}
+.ilMapManageLayersLabel.clickable {
+    cursor: pointer;
+}
+.ilMapManageLayersLabel.clickable:hover {
+    text-decoration:underline;
+}
+
+.mapLayersMapLayerContainer {
+
+}
+    .mapLayersMapLayerContainer:hover {
+        background-color:rgb(235, 235, 235);
+    }
+
+.mapLayersSectionHeader {
+    cursor: default;
+    padding: 4px 2px 2px 5px;
+    font-size: 14px;
+    color: gray;
+}
+
+#ilMapsUserWindow {
+    position:absolute;
+    top:30px;
+    right:5px;
+    padding:5px;
+    background-color:white;
+    border:1px solid black;
+    display:none;
+    z-index:50000;
+    box-shadow: 0 2px 10px rgba(0,0,0,.2);
+}
+
+.toolboxContainer {
+    
+    background-color:white;
+    z-index:10000;
+    border:1px solid black;
+    box-shadow: 0 2px 10px rgba(0,0,0,.2);
+    display:none;
+}
+
+.toolboxContainer.toolbox {
+    position:absolute;
+    right: 10px;
+    bottom:20px;
+    height:300px;
+    width:300px;
+}
+
+.toolboxContainer.manageMapData {
+    position:absolute;
+    right: 10px;
+    bottom:20px;
+    height:100px;
+    width:300px;
+}
+
+.toolboxContainer.redLine {
+    position:absolute;
+    right: 10px;
+    bottom:20px;
+    height:100px;
+    width:300px;
+}
+
+.toolboxHeader {
+    position:relative;
+    width:100%;
+    top:0px;
+    height:20px;
+    background-color:black;
+    cursor:pointer;
+}
+.toolboxCloseButtonContainer {
+    position:absolute;
+    right:2px;
+    height:16px;
+    width:16px;
+    background-image: url(/images/ddarrowwhite_down.png);
+}
+.toolboxHeaderTextContainer {
+    position:absolute;
+    left:2px;
+    color:white;
+}
+
+#toolboxToolbar {
+    position:absolute;
+    width:100%;
+    bottom:0px;
+    height:34px;
+    padding-left:2px;
+    padding-top:2px;
+    border-top:1px solid black;
+}
+
+.toolBox-toolButton {
+    width:30px;
+    height:30px;
+    cursor:pointer;
+    display:inline-block;
+}
+
+.redlineTool {
+    width:20px;
+    height:20px;
+    display:inline-block;
+    padding:2px;
+    border:1px solid #ccc;
+    cursor:pointer;
+}
+    .redlineTool:hover{
+        background-color:#ddd;
+    }
+    .redlineTool.active {
+        background:#eee;
+        border:1px solid blue;
+    }
+
+.tabBar{
+    margin-bottom:5px;
+    border-bottom:1px solid #ccc;
+}
+
+.tabItem{
+    cursor:pointer;
+    display:inline-block;
+    border:1px solid #ccc;
+    margin-bottom:-1px;
+    padding:2px 10px;
+    background-color:#eeeeee;
+}
+    .tabItem:hover{
+        background-color:#ddd;
+    }
+    .tabItem.active{
+        border-bottom:1px solid white;
+        font-weight:bold;
+        background-color:white;
+    }
+
+
+#redlineActiveLayer{
+    font-size:14px;
+    margin-left:0px;
+}
+
+#redlineDescriptionArea{
+    height:40px;
+    width:286px;
+    resize:none;
+}
+
+#redlineLayerList{
+    height:175px;
+    overflow:auto;
+    border:1px solid lightgray;
+    border-radius:2px;
+    padding:2px;
+}
+
+#redlineLayerListItem{
+    margin:2px;
+}
+
+.image-button{
+    cursor:pointer;
+}
+
+.subtle-link {
+    color: #cccccc;
+}
+    .subtle-link:hover {
+        text-decoration: underline;
+        cursor:pointer;
+    }
+
+.subtle-text{
+    color: #cccccc;
+
+}
+
+.float-right{
+    float:right;
+}
+
+.top-spaced {
+    margin-top:10px;
+}
+
+.link-button {
+    color:#3a84df;
+    cursor:pointer;
+}
+    .link-button:hover{
+        text-decoration:underline;
+        cursor:pointer;
+    }
+
+#toolBoxButton {
+    height:30px;
+    width:30px; position:absolute;
+    right: 10px;
+    bottom:30px;
+    z-index:9999;
+    cursor:pointer;
+    display:none;
+}
+
+#toolboxContent {
+    position:absolute;
+    top:20px;
+    bottom:37px;
+    left:0px;
+    right:0px;
+    margin:4px;
+}
+
+#toolboxMeasureToolContent {
+    width:100%;
+    height:100%
+}
+
+#toolboxMeasureToolClearResetContainer{
+    color:black;
+    cursor:pointer;
+    bottom:2px;
+    left:5px;
+    position:absolute;
+}
+
+
+#toolboxMeasureToolUnitsSelectContainer {
+    position:absolute;
+    top:2px;
+    right:5px;
+    text-align:right;
+}
+
+#toolboxMeasureToolValueLabels {
+    position:absolute;
+    left:5px;
+    top:2px;
+}
+
+#redlineBottomContentContainer {
+    bottom:2px;
+    left:5px;
+    position:absolute;
+}
+
+#mapDataManagerButton
+{
+    position:absolute;
+    bottom:25px;
+    right: 45px;
+    width:30px;
+    height:30px;
+    background-image: url(/images/layers.png);
+    cursor:pointer;
+    z-index: 9999;
+    margin: 5px;
+    display:none;
+}
+
+#redlineToolsButton {
+    position:absolute;
+    bottom:25px;
+    right: 85px;
+    width:30px;
+    height:30px;
+    background-image: url(/images/pencil.png);
+    cursor:pointer;
+    z-index: 9999;
+    margin: 5px;
+
+}
+
+#mapDataManagerContentContainer {
+    position: relative;
+    padding: 5px;
+}
+
+#mapDataManagerLoadLayerButtonContainer {
+    margin-top: 5px;
+}
+
+#kmlFileUploadSubmitButtonContainer {
+    float:left;
+}
+
+#kmlFileUploadZoomLayerCheckboxContainer {
+    padding-top:5px;
+    font-size: 13px;
+}
+
+.removeUserLayerLinkContainer {
+    float:right;
+    padding-top:4px;
+    padding-right:4px;
+    font-size:12px;
+}
+
+    .removeUserLayerLinkContainer:hover {
+        color:red;
+    }
+
+#fulcrumEditContainer {
+    z-index:60000;
+    margin:auto;
+    top:50px;
+    bottom:50px;
+    width: 800px;
+    position:relative;
+    height:700px;
+    display:none;
+    box-shadow: 0 2px 10px rgba(0,0,0,.2);
+    border:2px solid gray;
+    background-color:white;
+    overflow:hidden;
+}
+#fulcrumSiteContainer {
+    z-index:60000;
+    border:0;
+    width: 800px;
+    height:100%;
+}
+#fulcrumSiteContainerHeader {
+    height:20px;
+    padding:4px;
+    background-color:black;
+    color:white;
+}
+#fulcrumEditContainerCloseButton {
+    float:right;
+    cursor:pointer;
+}
+#fulcrumEditContainerRebranding {
+    position: absolute;
+    background-color: white;
+    height: 40px;
+    width: 100px;
+    left: 10px;
+    top: 35px;
+    font-size: 34px;
+}
+#fulcrumEditIframeContainer {
+    height:680px;
+}
+
+    
+
