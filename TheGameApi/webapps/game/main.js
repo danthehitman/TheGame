@@ -18,8 +18,19 @@
         viewmodels: 'viewmodels',
         models: 'models',
         services: 'services',
+
+        //Bindings
+        fadeVisible: '/webapps/common/bindings/fadevisible',
+        slideVisible: '/webapps/common/bindings/slidevisible',
+
+        //Common
+        baseMaker: '/webapps/common/basemaker',
+        baseWindowViewModel: '/webapps/common/viewmodels/basewindowviewmodel',
+        autoClosingWindowViewModel: '/webapps/common/viewmodels/autoclosingwindowviewmodel',
+        ilapi: "/webapps/common/ilapi",
+        utils: '/webapps/common/utils',
     },
-    game: {
+    map: {
         "*": {
             ko: "knockout",
             mapViewModel: 'viewmodels/mapviewmodel',
@@ -36,17 +47,6 @@
             directionUtils: 'models/directionutils',
             userGeoLocation: 'models/usergeolocation',
             mapContainer: "models/mapcontainer",
-
-            //Bindings
-            fadeVisible: '/webapps/common/bindings/fadevisible',
-            slideVisible: '/webapps/common/bindings/slidevisible',
-
-            //Common
-            baseMaker: '/webapps/common/basemaker',
-            baseWindowViewModel: '/webapps/common/viewmodels/basewindowviewmodel',
-            autoClosingWindowViewModel: '/webapps/common/viewmodels/autoclosingwindowviewmodel',
-            ilapi: "/webapps/common/ilapi",
-            utils: '/webapps/common/utils',
         }
     }
 });

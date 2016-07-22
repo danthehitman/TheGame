@@ -1,9 +1,5 @@
 ﻿<div id="appHeaderDiv">
     <div id="appHeadLeftDiv">
-        <div id="searchDiv">
-            <input id="searchBox" type="search" data-bind="value: mapSearchViewModel.searchTextValue, valueUpdate: 'afterkeydown', hasfocus: mapSearchViewModel.searchBoxFocus, event:{keypress:mapSearchViewModel.onKeyPress}" placeholder="Enter search text" />
-            <input type="checkbox" data-bind="checked: mapSearchViewModel.limitSearchToExtent, attr:{iltooltip:LIMIT_SEARCH_TOOLTIP}" />
-        </div>
         <!--TODO: DEF hiding the notification container is a temporary fix until we address how to do notification in miniMode.-->
         <div id="appNotificationContainer" data-bind="style: {'display': miniMode() ? 'none' : 'inline-block'}">
             <div id="notificationHistoryButtonContainer" data-bind="style: {'display': notificationViewModel.displayNotification() ? 'none' : 'inline-block'}, click: function(){notificationViewModel.toggleOrSetDisplay()}">(...)</div>
@@ -20,38 +16,11 @@
     <div id="ilmapsMobileMenuButton" data-bind="style: {'display': miniMode() ? 'inline-block' : 'none'}, click: function() {toggleShowMobileHeader()},"></div>
     <div id="ilmapsToolHeaderDiv" data-bind="css: miniMode() ? 'ilmapsMobileToolHeaderDiv':'ilmapsDesktopToolHeaderDiv', style: {'display': getHeaderDisplayVal()},">
         <div id="appHeadRightDiv">
-            <div id="ilMapsAppsButton" data-bind="click:appsButtonViewModel.toggleAppsWindow.bind()"></div>
-            <div id="ilMapsAppsButtonWindow" data-bind="hasFocus: appsButtonViewModel.windowHasFocus,style: {width: (85 * appsButtonViewModel.appsList().length) + 'px', display: appsButtonViewModel.displayWindow() ? 'block' : 'none'}">
-                <!-- ko foreach: appsButtonViewModel.appsList-->
-                <div class="ilMapsAppsButtonContainer" data-bind="click:function(){window.location=url}">
-                    <div class="ilMapsAppsButtonImageContainer" data-bind="style:{'background': 'url(' + image + ')'}"></div>
-                    <div class="ilMapsAppsButtonText" data-bind="text:display"></div>
-                </div>
-                <!--/ko-->
-                <div class="ilMapAppsHorBar"></div>
-                <div>
-                    <span><a role="button" id="ilMapAppsSettingsButton" data-bind="click:appsButtonViewModel.toggleSettingsWindow.bind(), text: appsButtonViewModel.showSettings() ? 'hide settings' : 'settings'"></a></span>
-                </div>
-                <div id="ilMapAppsSettingsWindow" data-bind="style: {display: appsButtonViewModel.displayWindow() && appsButtonViewModel.showSettings() ? 'block' : 'none'}">
-                    <!--ko if: hasGeolocation--><div class="ilMapAppsSettingsContainer"><input type="checkbox" data-bind="checked: trackCurrentLocation" />track current location?</div><!--/ko-->
-                    <div class="ilMapAppsSettingsContainer"><span class="ilMapAppsSettingLinkButton" data-bind="click: setCurrentSiteViewAsDefault">Set current site view as default.</span></div>
-                </div>
-            </div>
+            
             <div id="helpIconContainer">
                 <img src="images/help_20x20.png" data-bind="click:function(){window.open('/help')}" />
             </div>
-            <div id="userIconContainer" data-bind="click: function(){userWindowViewModel.toggleOrSetDisplay()}, style: {'display': userConnected() ? 'inline-block' : 'none'}">
-                <img src="images/user_20x20.png" />
-            </div>
-            <div id="ilMapsUserWindow" data-bind="style: {display: userWindowViewModel.displayWindow() && userConnected() ? 'block' : 'none'}">
-                <div data-bind="text:currentUser"></div>&nbsp;<a id="logoutLink" role="button" data-bind="click: handleAuthButtonClick">(Logout)</a>
-            </div>
             <div class="ilHeaderVertSeparator"></div>
-            <div id="siteViewSelectorContainer" data-bind="style: {'display': showSiteViewSelector() ? 'inline-block' : 'none'}">
-                <span id="siteViewSelectorLabel" data-bind="click: mapViewModel.zoomSiteViewExtent.bind()">Site Views: </span>
-                <select id="siteViewSelector" data-bind="options: siteViews ? siteViews : [], optionsText: 'name', optionsValue: 'uuid', value: selectedSiteViewId"></select>
-            </div>
-            <div id="refreshSiteViewButtonContainer" data-bind="click: refreshSiteviewHandler"></div>
         </div>
     </div>
 </div>

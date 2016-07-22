@@ -263,6 +263,7 @@
     <Compile Include="Controllers\DiscoveryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Models\DiscoveryGenerateDto.cs" />
+    <Compile Include="Controllers\SessionsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Core\Services\AuthService.cs" />
     <Compile Include="Core\Services\DiscoveryService.cs" />
@@ -274,6 +275,7 @@
     <Compile Include="DataAccess\IDiscoveryRepository.cs" />
     <Compile Include="DataAccess\IGeoRepository.cs" />
     <Compile Include="DataAccess\IRepository.cs" />
+    <Compile Include="DataAccess\ISessionRepository.cs" />
     <Compile Include="DataAccess\ItemClassRepository.cs" />
     <Compile Include="DataAccess\ItemRepository.cs" />
     <Compile Include="DataAccess\ItemTypeRepository.cs" />
@@ -359,13 +361,16 @@
     <Content Include="webapps\game\services\mapservice.js" />
     <Content Include="webapps\game\viewmodels\app.js" />
     <Content Include="webapps\game\viewmodels\mapviewmodel.js" />
+    <Content Include="webapps\game\viewmodels\measuretoolviewmodel.js" />
     <Content Include="webapps\game\viewmodels\notificationviewmodel.js" />
+    <Content Include="webapps\game\viewmodels\redlineviewmodel.js" />
     <Content Include="webapps\game\viewmodels\southcontentviewmodel.js" />
     <Content Include="webapps\game\viewmodels\toolboxviewmodel.js" />
     <Content Include="webapps\game\views\app.html" />
     <Content Include="webapps\game\views\headerview.html" />
     <Content Include="webapps\game\views\loginview.html" />
     <Content Include="webapps\game\views\northcontentview.html" />
+    <Content Include="webapps\game\views\southcontentview.html" />
     <Content Include="webapps\libs\durandal\css\durandal.css" />
     <Content Include="webapps\libs\durandal\img\icon.png" />
     <Content Include="webapps\libs\durandal\img\ios-startup-image-landscape.png" />

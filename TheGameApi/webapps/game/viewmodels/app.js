@@ -1,6 +1,6 @@
-﻿define(['knockout', 'pubsub', 'utils', 'ilapi', 'toolboxViewModel', 'southContentViewModel', 'notificationViewModel', 'redLineViewModel', 'userGeoLocation',
+﻿define(['knockout', 'pubsub', 'utils', 'ilapi', 'toolboxViewModel', 'mapViewModel', 'southContentViewModel', 'notificationViewModel', 'redLineViewModel', 'userGeoLocation',
     'ilapi', 'fadeVisible', 'slideVisible', 'jqueryFileDownload'],
-    function (ko, pubsub, utils, Ilapi, ToolboxViewModel, SouthContentViewModel, NotificationViewModel, RedLineViewModel, userGeoLocation) {
+    function (ko, pubsub, utils, Ilapi, ToolboxViewModel, MapViewModel, SouthContentViewModel, NotificationViewModel, RedLineViewModel, userGeoLocation) {
         return function appViewModel() {
             var self = this;
 
@@ -86,12 +86,14 @@
             };
 
             self.createViewModels = function () {
+                self.mapViewModel = new MapViewModel(self.integraApi, self.ilMapSettings);
                 self.toolboxViewModel = new ToolboxViewModel();
                 self.southContentViewModel = new SouthContentViewModel();
                 self.redlineViewModel = new RedLineViewModel();
             };
 
             self.initViewModels = function () {
+                self.mapViewModel.initialize(self);
                 userGeoLocation.initialize();
                 self.toolboxViewModel.initialize(self);
                 self.southContentViewModel.initialize(self.integraApi, self);
@@ -108,7 +110,9 @@
             // we will try and connect the user and get a session.  We also grab any state variables off of the query
             // string and load them here.
             self.checkState = function () {
-                self.sessionToken(utils.getSessionCookie());
+                utils.storeSessionCookie("7EA9B445-F160-4F58-82E6-B87A333EF344");
+                //self.sessionToken(utils.getSessionCookie());
+                self.sessionToken("7EA9B445-F160-4F58-82E6-B87A333EF344");
                 if (self.sessionToken() != null) {
                     self.integraApi.checkSessionState(self.checkSessionSuccessCallback, self.checkSessionErrorCallback);
                 } else {
@@ -191,7 +195,8 @@
                 self.notificationViewModel.notify("Connected.  Retrieving ui configuration...");
                 self.sessionToken(data);
                 self.userConnected(true);
-                self.integraApi.getUserUiConfig(self.configurationLoadedHandler, self.configurationErrorHandler);
+                //self.integraApi.getUserUiConfig(self.configurationLoadedHandler, self.configurationErrorHandler);
+                self.configurationLoadedHandler();
                 self.updateAuthButtonText();
             };
 
@@ -230,7 +235,7 @@
             };
 
             self.configurationLoadedHandler = function (data) {
-                self.appDataObject = data;
+                //self.appDataObject = data;
                 self.initializeGoogleApis();
             };
 

@@ -1,0 +1,5 @@
+﻿<div id="southContentContainer" data-bind="style: { 'height': heightPx, 'display': isVisible() ? 'block' : 'none' }">
+    <div id="southContentHeader"></div>
+    <div id="southContentBody" data-bind="compose:activeViewModel"></div>
+    <a role="button" id="closeSouthContentButton" data-bind="click: function(){toggleOrSetIsVisible(false);} "></a>
+</div>

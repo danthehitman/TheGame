@@ -91,15 +91,15 @@
     };
 
     self.storeSessionCookie = function (token) {
-        $.cookie("integralinksessiontoken", token, { expires: 2, secure: true });
+        $.cookie("thegamesessiontoken", token, { expires: 2, secure: true });
     };
 
     self.getSessionCookie = function () {
-        return $.cookie("integralinksessiontoken");
+        return $.cookie("thegamesessiontoken");
     };
 
     self.deleteSessionCookie = function () {
-        $.removeCookie("integralinksessiontoken");
+        $.removeCookie("thegamesessiontoken");
     };
 
     self.storeAdminSessionCookie = function (token) {

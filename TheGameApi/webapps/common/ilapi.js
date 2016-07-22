@@ -17,7 +17,7 @@ define(['pubsub', 'guidgen', 'utils'],
                 'https://www.googleapis.com/auth/userinfo.email',
                 'https://www.googleapis.com/auth/userinfo.profile'];
             self.AUTHREDIRECTURL = window.location.href.split('?')[0];
-            self.SESSIONENDPOINT = 'auth/sessions';
+            self.SESSIONENDPOINT = 'sessions';
             self.USERCONFIGENDPOINT = 'users/uiconfig';
             self.GISFEATUREENDPOINT = 'gis/features';
             self.GMELAYERSENDPOINT = 'gis/gmelayers';

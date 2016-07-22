@@ -10,10 +10,12 @@ namespace TheGameApi
         {
             // Web API configuration and services
             var container = new UnityContainer();
-            //container.RegisterType<TheGameContext, TheGameContext>(new HierarchicalLifetimeManager());
-            //container.RegisterType<IDiscoveryRepository>(new ContainerControlledLifetimeManager(),
-            //   new InjectionFactory(c => new DiscoveryRepository(c.Resolve<TheGameContext>())));
-            container.RegisterType<IDiscoveryRepository, DiscoveryRepository>(new HierarchicalLifetimeManager());
+            container.RegisterType<TheGameContext, TheGameContext>(new HierarchicalLifetimeManager());
+            container.RegisterType<IDiscoveryRepository>(new ContainerControlledLifetimeManager(),
+               new InjectionFactory(c => new DiscoveryRepository(c.Resolve<TheGameContext>())));
+            container.RegisterType<ISessionRepository>(new ContainerControlledLifetimeManager(),
+               new InjectionFactory(c => new SessionRepository(c.Resolve<TheGameContext>())));
+            //container.RegisterType<IDiscoveryRepository, DiscoveryRepository>(new HierarchicalLifetimeManager());
             config.DependencyResolver = new UnityResolver(container);
 
             // Web API routes

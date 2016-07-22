@@ -590,10 +590,6 @@ function (ko, pubsub, guidgen, utils, userGeoLocation, directionUtils, mapServic
         };
 
         self.resetAppState = function () {
-            self.mapLayersViewModel.clearWmsLayers();
-            self.mapLayersViewModel.clearIlmeLayers();
-            self.mapLayersViewModel.clearGmeLayers();
-            self.mapLayersViewModel.clearPostGisLayers();
             self.clearMapMarkers();
             self.clearHighlights();
         };
