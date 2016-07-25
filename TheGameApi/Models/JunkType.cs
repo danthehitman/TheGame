@@ -10,5 +10,6 @@ namespace TheGameApi.Models
         public int Effectiveness { get; set; }
         public ICollection<Recipe> Recipes { get; set; }
         public ICollection<JunkClass> Classes { get; set; }
+        public int Rarity { get; set; }
     }
 }

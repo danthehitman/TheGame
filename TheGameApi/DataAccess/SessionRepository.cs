@@ -2,7 +2,7 @@
 
 namespace TheGameApi.DataAccess
 {
-    public class SessionRepository : Repository<Session>
+    public class SessionRepository : Repository<Session>, ISessionRepository
     {
         public SessionRepository() : base()
         {

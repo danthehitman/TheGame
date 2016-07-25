@@ -1,5 +1,6 @@
 ﻿using System.Web.Http;
 using Microsoft.Practices.Unity;
+using TheGameApi.Core.Services;
 using TheGameApi.DataAccess;
 
 namespace TheGameApi
@@ -10,12 +11,27 @@ namespace TheGameApi
         {
             // Web API configuration and services
             var container = new UnityContainer();
-            container.RegisterType<TheGameContext, TheGameContext>(new HierarchicalLifetimeManager());
-            container.RegisterType<IDiscoveryRepository>(new ContainerControlledLifetimeManager(),
-               new InjectionFactory(c => new DiscoveryRepository(c.Resolve<TheGameContext>())));
-            container.RegisterType<ISessionRepository>(new ContainerControlledLifetimeManager(),
-               new InjectionFactory(c => new SessionRepository(c.Resolve<TheGameContext>())));
-            //container.RegisterType<IDiscoveryRepository, DiscoveryRepository>(new HierarchicalLifetimeManager());
+
+            //TheGameContext context = new TheGameContext();
+            container.RegisterType<IDiscoveryRepository>(new TransientLifetimeManager(),
+               new InjectionFactory(c => new DiscoveryRepository()));
+            container.RegisterType<ISessionRepository>(new TransientLifetimeManager(),
+               new InjectionFactory(c => new SessionRepository()));
+            container.RegisterType<IUserRepository>(new TransientLifetimeManager(),
+               new InjectionFactory(c => new UserRepository()));
+            container.RegisterType<IItemRepository>(new TransientLifetimeManager(),
+               new InjectionFactory(c => new ItemRepository()));
+            container.RegisterType<IJunkRepository>(new TransientLifetimeManager(),
+               new InjectionFactory(c => new JunkRepository()));
+            container.RegisterType<IJunkTypeRepository>(new TransientLifetimeManager(),
+               new InjectionFactory(c => new JunkTypeRepository()));
+            container.RegisterType<IItemTypeRepository>(new TransientLifetimeManager(),
+               new InjectionFactory(c => new ItemTypeRepository()));
+            container.RegisterType<IDiscoveryService>(new TransientLifetimeManager(),
+                new InjectionFactory(c => new DiscoveryService(c.Resolve<IItemRepository>(),
+                c.Resolve<IJunkRepository>(), c.Resolve<IDiscoveryRepository>(),
+                c.Resolve<IJunkTypeRepository>(), c.Resolve<IItemTypeRepository>())));
+
             config.DependencyResolver = new UnityResolver(container);
 
             // Web API routes

@@ -66,7 +66,7 @@
                 me.deactivate = function () {
                     self.appViewModel.mapViewModel.measureToolViewModel.setIsMeasuring(false);
                 };
-            }
+            };
 
             self.redlineTool = function () {
                 var me = this;
@@ -82,7 +82,7 @@
                 me.deactivate = function () {
                     self.appViewModel.redlineViewModel.toggleEnabled();
                 };
-            }
+            };
 
             return self;
         };

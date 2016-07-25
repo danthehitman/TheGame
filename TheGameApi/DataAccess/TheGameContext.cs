@@ -13,6 +13,13 @@ namespace TheGameApi.DataAccess
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            //modelBuilder.Entity<Item>()
+            //    .HasOptional(i => i.Owner)
+            //    .WithMany(o => o.Items)
+            //    .HasForeignKey(i => i.OwnerId)
+            //    .WillCascadeOnDelete(false);
+           
+
             modelBuilder.Entity<Recipe>()
             .HasMany(t => t.JunkTypes)
             .WithMany(t => t.Recipes);

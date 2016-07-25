@@ -15,6 +15,7 @@
         pubsub: '/webapps/libs/pubsub',
         guidgen: '/webapps/libs/guidgen',
         geojson: '/webapps/libs/GeoJSON',
+        wkt: '/webapps/libs/wicket',
         viewmodels: 'viewmodels',
         models: 'models',
         services: 'services',
@@ -36,17 +37,21 @@
             mapViewModel: 'viewmodels/mapviewmodel',
             notificationViewModel: 'viewmodels/notificationviewmodel',
             toolboxViewModel: 'viewmodels/toolboxviewmodel',
+            backpackViewModel: 'viewmodels/backpackviewmodel',
             measureToolViewModel: 'viewmodels/measuretoolviewmodel',
             redLineViewModel: 'viewmodels/redlineviewmodel',
             mapService: 'services/mapservice',
+            scannerService: 'services/scannerservice',
+            theWorld: 'services/theworld',
             southContentViewModel: 'viewmodels/southcontentviewmodel',
 
             //Models
-            ilMapSettings: "models/ilmapsettings",
+            mapSettings: "models/mapsettings",
             geojsonutils: 'models/geojsonutils',
             directionUtils: 'models/directionutils',
             userGeoLocation: 'models/usergeolocation',
             mapContainer: "models/mapcontainer",
+            userModel: "models/usermodel"
         }
     }
 });

@@ -1,0 +1,48 @@
+﻿<div id="backpackHeader" class="backpackHeader" data-bind="click: function(){backpackViewModel.toggleOrSetDisplay()}">
+    <span id="backpackHeaderTextContainer" class="backpackHeaderTextContainer">Backpack</span>
+    <span id="backpackCloseButtonContainer" class="backpackCloseButtonContainer"></span>
+</div>
+<div id="backpackContent">
+    <div id="backpackMenuContainer" class="tabBar" data-bind="foreach:backpackViewModel.allTabs">
+        <div class="tabItem" data-bind="text:$data, click:function(){$parent.backpackViewModel.activeTab($data);}, css: {active: $parent.backpackViewModel.activeTab() == $data}"></div>
+    </div>
+    <!-- ko if: backpackViewModel.activeTab() == backpackViewModel.tabs.junk-->
+    <div id="backpackJunkTypeContainer">
+        <div data-bind="click:function(){theWorld.onUserLocationChanged();}">Junk</div>
+        <div id="backpackDisplayContainer" data-bind="foreach:backpackViewModel.theUser.junkTypes">
+            <span data-bind="text:$data.name"></span>
+            <span> | </span>
+            <span data-bind="text:$data.count"></span>
+            <span data-bind="text: $data.expanded() === true ? '-' : '+', click:function(){$data.expanded(!$data.expanded());}"></span>
+            <div id="backpackItemDisplayContainer" data-bind="foreach:$data.junk, style:{display: $data.expanded() === true ? 'block' : 'none'}">
+                <span data-bind="text:$data.Type.Name"></span>
+                <span data-bind="text:$data.Quality"></span>
+                <br />
+            </div>
+            <br />
+        </div>
+    </div>
+    <!-- /ko-->
+    <!-- ko if: backpackViewModel.activeTab() == backpackViewModel.tabs.items -->
+    <div id="backpackItemTypeContainer">
+        <div id="backpackDisplayContainer" data-bind="foreach:backpackViewModel.theUser.itemTypes">
+            <span data-bind="text:$data.name"></span>
+            <span> | </span>
+            <span data-bind="text:$data.count"></span>
+            <span data-bind="text: $data.expanded() === true ? '-' : '+', click:function(){$data.expanded(!$data.expanded());}"></span>
+            <div id="backpackItemDisplayContainer" data-bind="foreach:$data.items, style:{display: $data.expanded() === true ? 'block' : 'none'}">
+                <span data-bind="text:$data.Name"></span>
+                <span> | </span>
+                <span data-bind="text:$data.Quality"></span>
+                <span> | </span>
+                <span data-bind="text:$data.Effectiveness"></span>
+                <span> | </span>
+                <span data-bind="text:$data.Uses"></span>
+                <span data-bind="click:function(){$root.scannerService.useScanner($data);}">  scan</span>
+                <br />
+            </div>
+            <br />
+        </div>
+    </div>
+     <!-- /ko -->
+</div>

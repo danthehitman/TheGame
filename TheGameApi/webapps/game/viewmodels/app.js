@@ -1,6 +1,8 @@
-﻿define(['knockout', 'pubsub', 'utils', 'ilapi', 'toolboxViewModel', 'mapViewModel', 'southContentViewModel', 'notificationViewModel', 'redLineViewModel', 'userGeoLocation',
+﻿define(['knockout', 'pubsub', 'utils', 'ilapi', 'toolboxViewModel', 'backpackViewModel', 'mapViewModel', 'mapSettings', 'southContentViewModel', 'notificationViewModel', 'redLineViewModel', 'userGeoLocation',
+    "scannerService", "theWorld", "userModel",
     'ilapi', 'fadeVisible', 'slideVisible', 'jqueryFileDownload'],
-    function (ko, pubsub, utils, Ilapi, ToolboxViewModel, MapViewModel, SouthContentViewModel, NotificationViewModel, RedLineViewModel, userGeoLocation) {
+    function (ko, pubsub, utils, Ilapi, ToolboxViewModel, BackpackViewModel, MapViewModel, MapSettings, SouthContentViewModel, NotificationViewModel,
+        RedLineViewModel, userGeoLocation, ScannerService, TheWorld, TheUser) {
         return function appViewModel() {
             var self = this;
 
@@ -17,10 +19,14 @@
 
             // View Models==================================================================================
             self.toolboxViewModel = null;
+            self.backpackViewModel = null;
             self.mapSettings = null;
             self.southContentViewModel = null;
             self.notificationViewModel = null;
             self.redlineViewModel = null;
+            self.scannerService = null;
+            self.theWorld = null;
+            self.theUser = null;
 
             // App Variables==================================================================================
             self.miniMode = ko.observable(false);
@@ -31,9 +37,9 @@
             self.trackCurrentLocation = ko.observable(false);
             self.showLoginSplashScreen = ko.observable(false);
             self.configurationLoaded = ko.observable();
-            self.currentUser = ko.observable("");
+            self.currentUser = ko.observable(null);
             self.appDataObject = null;
-            self.currentUserShort = ko.computed(function () { return self.currentUser().split('@')[0]; });
+            //self.currentUserShort = ko.computed(function () { return self.currentUser().split('@')[0]; });
             self.showSearchResultsIcon = ko.observable(false);
             self.userConnected = ko.observable(false);
             self.authButtonText = ko.observable(self.LOGIN_TEXT);
@@ -60,7 +66,7 @@
                 });
                 $.ajaxSetup({ cache: false });
 
-                self.createViewModels();
+                self.createDependencies();
                 self.setupEventSubscriptions();
                 self.notificationViewModel = new NotificationViewModel(self).initialize();
                 self.checkState();
@@ -68,7 +74,7 @@
 
             self.initialize = function () {
                 self.isMobile(utils.isMobile.any());
-                self.initViewModels();
+                self.initDependencies();
                 self.notificationViewModel.notify("Initializing...");
                 //TODO: DEF Need a more elegant solution here.
                 self.checkHeadSize();
@@ -76,8 +82,7 @@
             };
 
             self.initializeGoogleApis = function () {
-                self.mapSettings = new mapapSettings().initialize();
-                var appConfig = self.appDataObject;
+                self.mapSettings = new MapSettings().initialize();
                 var browserKey = self.mapSettings.browserkey;
 
                 require(['async!https://maps.googleapis.com/maps/api/js?v=3&sensor=false&libraries=places,visualization,drawing&key={0}'.format(browserKey)], function () {
@@ -85,25 +90,30 @@
                 });
             };
 
-            self.createViewModels = function () {
-                self.mapViewModel = new MapViewModel(self.integraApi, self.ilMapSettings);
+            self.createDependencies = function () {
+                self.scannerService = new ScannerService();
+                self.theWorld = new TheWorld();
+                self.theUser = new TheUser();
+                self.mapViewModel = new MapViewModel(self.integraApi, self.mapSettings);
                 self.toolboxViewModel = new ToolboxViewModel();
+                self.backpackViewModel = new BackpackViewModel();
                 self.southContentViewModel = new SouthContentViewModel();
                 self.redlineViewModel = new RedLineViewModel();
             };
 
-            self.initViewModels = function () {
+            self.initDependencies = function () {
                 self.mapViewModel.initialize(self);
                 userGeoLocation.initialize();
+                self.scannerService.initialize(self.theWorld, self.integraApi, self.mapViewModel);
                 self.toolboxViewModel.initialize(self);
                 self.southContentViewModel.initialize(self.integraApi, self);
                 self.redlineViewModel.initialize(self.integraApi, self);
             };
 
             self.loadSettings = function () {
-                if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                //if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
                     self.trackCurrentLocation(true);
-                }
+                //}
             };
 
             // This method is used to see if we are returning from the google auth service or not.  If we have a code
@@ -140,7 +150,6 @@
             // Callback Handlers==============================================================================
             self.checkSessionSuccessCallback = function () {
                 self.userConnectedHandler(self.sessionToken());
-                self.integraApi.refreshGoogleToken();
             };
 
             self.checkSessionErrorCallback = function (result) {
@@ -196,6 +205,7 @@
                 self.sessionToken(data);
                 self.userConnected(true);
                 //self.integraApi.getUserUiConfig(self.configurationLoadedHandler, self.configurationErrorHandler);
+                self.integraApi.getLoggedInUser(self.getUserSuccessHandler, self.getUserErrorHandler);
                 self.configurationLoadedHandler();
                 self.updateAuthButtonText();
             };
@@ -208,7 +218,7 @@
 
             self.connectionErrorHandler = function (error) {
                 self.userConnected(false);
-                self.currentUser("");
+                self.currentUser(null);
                 if (error != null && error.responseText != null) {
                     self.notificationViewModel.notify(error.responseText);
                     self.setLoginFailureMessage(error.responseText);
@@ -216,6 +226,17 @@
                 self.updateAuthButtonText();
                 self.enableAuthButton();
                 self.resetAppState();
+            };
+
+            self.getUserSuccessHandler = function (data) {
+                self.theUser.initialize(data.Id, self.mapViewModel, self.integraApi);
+                self.theWorld.initialize(self.mapViewModel, self.integraApi, self.theUser);
+                self.backpackViewModel.initialize(self, self.theWorld, self.theUser);
+
+            };
+
+            self.getUserErrorHandler = function (error) {
+                self.notificationViewModel.notify(error);
             };
 
             self.setLoginFailureMessage = function (errorMessage) {
@@ -240,17 +261,16 @@
             };
 
             self.googleApisLoaded = function (message) {
+
+                if (!google.maps.Circle.prototype.contains) {
+                    google.maps.Circle.prototype.contains = function (latLng) {
+                        return this.getBounds().contains(latLng) && google.maps.geometry.spherical.computeDistanceBetween(this.getCenter(), latLng) <= this.getRadius();
+                    };
+                }
+
                 self.initialize();
                 var appConfig = self.appDataObject;
                 if (appConfig != null) {
-                    if (appConfig.accesstoken) {
-                        self.notificationViewModel.notify("Access Token: " + appConfig.accesstoken.token);
-                        self.mapViewModel.accessToken(appConfig.accesstoken.token);
-                    } else {
-                        self.notificationViewModel.notify("No access token was returned.  GME layers cannot be loaded.");
-                    }
-                    // Schedule the initial refresh of the access token with the ilapi.
-                    window.setTimeout(function () { self.integraApi.refreshGoogleToken(); }, appConfig.accesstoken.expires_in * 900);
 
                     self.notificationViewModel.notify("Welcome.");
                     self.currentUser(appConfig.user.username);
@@ -277,7 +297,6 @@
 
             self.onTrackCurrentLocationChanged = function () {
                 self.mapViewModel.trackCurrentLocation(self.trackCurrentLocation());
-                self.appsButtonViewModel.updateTrackLocationCookie(self.trackCurrentLocation());
             };
 
             // Auth Button Stuff
@@ -313,31 +332,12 @@
                 self.authButtonColor(self.AUTH_BUTTON_ENABLED_COLOR);
             };
 
-            // The user object sent to the user update api requires ids
-            // for organization and siteviews as opposed to the full objects.
-            // This may change.
-            self.getCurrentUserObjectForWrite = function () {
-                var userObjForWrite = $.extend(true, {}, self.appDataObject.user);
-                if (userObjForWrite != null) {
-                    var siteViewIds = [],
-                        i;
-                    for (i = 0; i < userObjForWrite.siteviews.length; i++) {
-                        siteViewIds.push(userObjForWrite.siteviews[i].uuid);
-                    }
-                    if (self.appDataObject.user.organization != null) {
-                        userObjForWrite.organization = self.appDataObject.user.organization.uuid;
-                    }
-                    userObjForWrite.siteviews = siteViewIds;
-                }
-                return userObjForWrite;
-            };
-
             self.resetAppState = function () {
                 self.showLoginSplashScreen(true);
                 self.userConnected(false);
                 self.configurationLoaded(false);
                 self.updateAuthButtonText();
-                self.currentUser("");
+                self.currentUser(null);
                 self.mapViewModel.resetAppState();
                 self.toolboxViewModel.reset();
             };

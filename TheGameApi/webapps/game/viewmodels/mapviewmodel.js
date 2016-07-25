@@ -16,8 +16,6 @@ function (ko, pubsub, guidgen, utils, userGeoLocation, directionUtils, mapServic
         self.zoomTimer = null;
         self.varDoneZoomingInterval = 500;
         self.mapCoordinates = ko.observable();
-        self.elevationService = null;
-        self.placesService = null;
         self.infoWindow = null;
         self.currentDrawing = null;
         self.drawingCallback = null;
@@ -30,6 +28,8 @@ function (ko, pubsub, guidgen, utils, userGeoLocation, directionUtils, mapServic
         self.mapMarkerLabels = {};
         self.featureOverlays = {};
         self.directionRenderers = [];
+        self.userBuffer = null;
+        self.locationUpdateCount = ko.observable(0);
 
         self.initialize = function (appVM) {
             self.appViewModel = appVM;
@@ -37,8 +37,6 @@ function (ko, pubsub, guidgen, utils, userGeoLocation, directionUtils, mapServic
             self.measureToolViewModel.initialize(self.mapService, appVM);
 
             self.infoWindow = new google.maps.InfoWindow();
-            //self.elevationService = new google.maps.ElevationService();
-            self.placesService = new google.maps.places.PlacesService(self.mapService.getMap());
 
             self.setupEventSubscriptions();
             self.initializeLabel();
@@ -101,39 +99,12 @@ function (ko, pubsub, guidgen, utils, userGeoLocation, directionUtils, mapServic
             }
         };
 
-        self.handleGetPlaceDetailsCallback = function (place, status) {
-            //  Check to see if the place is a geometry or a point.  If its a geometry we are just
-            // going to set the bounds but if its a location we will show a marker.
-            if (status !== "OK") {
-                self.appViewModel.notificationViewModel.notify("There was a problem retrieving place information.");
-            } else {
-                if (place.geometry) {
-                    if (place.geometry.viewport) {
-                        self.mapService.getMap().fitBounds(place.geometry.viewport);
-                    }
-                    else {
-                        self.mapService.getMap().setCenter(place.geometry.location);
-                        self.mapService.getMap().setZoom(17);
-                        self.placeMarker(place.geometry.location, self.SEARCH_MARKER_KEY);
-                    }
-                }
-            }
-        };
-
         //Methods
 
         self.setMapStyle = function (styleArray) {
             self.mapService.getMap().setOptions({ styles: styleArray });
         };
-
-        self.zoomPlace = function (place) {
-            if (place.reference) {
-                self.placesService.getDetails({ reference: place.reference }, self.handleGetPlaceDetailsCallback);
-            }
-            else {
-                self.appViewModel.notificationViewModel.notify("Unable to zoom to selected location.");
-            }
-        };
+        
 
         self.displayCoordinates = function (pnt) {
             if (pnt.lat && pnt.lng) {
@@ -173,18 +144,10 @@ function (ko, pubsub, guidgen, utils, userGeoLocation, directionUtils, mapServic
         // Markers and highlights stuff.====================================================================================
 
         self.markerIcons = {
-            defaultMarkerIcon: "http://www.google.com/mapfiles/ms/micons/red.png",
-            latLong: { url: "http://www.google.com/mapfiles/arrow.png", anchor: { x: 10, y: 34 } },
-            pointFeatureIcon: "http://labs.google.com/ridefinder/images/mm_20_blue.png",
-            pointHighlightIcon: "http://google.com/mapfiles/kml/paddle/red-circle.png",
-            pointFlashIcon: { url: "/markerimages/point_flash.png", anchor: { x: 9, y: 9 } },
-            currentLocationActive: { url: "/markerimages/currentlocation_active.png", anchor: { x: 32, y: 32 } },
-            currentLocationInactive: { url: "/markerimages/currentlocation_inactive.png", anchor: { x: 32, y: 32 } },
-            crosshair: { url: "/markerimages/crosshair31.png", anchor: { x: 16, y: 16 } },
-            stationlocator: { url: "/markerimages/stationlocator.png", anchor: { x: 13, y: 24 } }
+            userCurrentLocation: { url: "/images/usercurrentlocation.png", anchor: { x: 32, y: 32 } }
         };
 
-        self.placeMarker = function (latlng, markerId, markerImage, infoContents, contentsAsLabel) {
+        self.placeMarker = function (latlng, markerId, markerImage, markerClickCallback, label) {
             // Check for an existing marker with the id.  If we have one get rid of it.
             var marker,
                 label,
@@ -204,21 +167,18 @@ function (ko, pubsub, guidgen, utils, userGeoLocation, directionUtils, mapServic
             marker = new google.maps.Marker({
                 map: self.mapService.getMap(),
                 position: latlng,
-                icon: markerImage != null ? markerImage : self.markerIcons.defaultMarkerIcon,
+                icon: markerImage,
                 clickable: false
             });
             //  If there are contents to show then set clickable back to true and set up the info window.
-            if (infoContents && !contentsAsLabel) {
+            if (markerClickCallback) {
                 marker.setClickable(true);
-                google.maps.event.addListener(marker, 'click', function () {
-                    self.infoWindow.setContent(infoContents);
-                    self.infoWindow.open(self.mapService.getMap(), marker);
-                });
-            } else if (infoContents && contentsAsLabel) {
+                google.maps.event.addListener(marker, 'click', markerClickCallback);
+            } else if (label) {
                 markerLabel = new self.Label({ map: self.mapService.getMap() });
                 markerLabel.set('zIndex', 99999);
                 markerLabel.bindTo('position', marker, 'position');
-                markerLabel.set('text', infoContents);
+                markerLabel.set('text', label);
                 self.mapMarkerLabels[markerId] = markerLabel;
             }
             if (!markerId) {
@@ -354,16 +314,23 @@ function (ko, pubsub, guidgen, utils, userGeoLocation, directionUtils, mapServic
 
         self.onUserLocationChanged = function (position) {
             self.refreshLocationMarker();
+            self.locationUpdateCount(self.locationUpdateCount() + 1);
         }
 
         self.zoomCurrentLocation = function () {
-            if (!userGeoLocation.hasGeoLocation()) return;
-            if (userGeoLocation.mostRecentPosition() == null) return;
+            var loc = self.getCurrentLocation();
+            if (loc == null) return;
+            
+            self.zoomToPoint(loc);
+        };
 
-            var loc = self.createLatLong(
+        self.getCurrentLocation = function () {
+            if (!userGeoLocation.hasGeoLocation()) return null;
+            if (userGeoLocation.mostRecentPosition() == null) return null;
+
+            return self.createLatLong(
                 userGeoLocation.mostRecentPosition().coords.latitude,
                 userGeoLocation.mostRecentPosition().coords.longitude);
-            self.zoomToPoint(loc);
         };
 
         self.refreshLocationMarker = function () {
@@ -388,12 +355,26 @@ function (ko, pubsub, guidgen, utils, userGeoLocation, directionUtils, mapServic
 
             var newLatLng = self.createLatLong(position.coords.latitude, position.coords.longitude);
 
-            var icon = userGeoLocation.isLocationActive()
-                ? self.markerIcons.currentLocationActive
-                : self.markerIcons.currentLocationInactive;
+            if (self.userBuffer == null) {
+                self.userBuffer = new google.maps.Circle({
+                    strokeColor: '#FF0000',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2,
+                    fillColor: '#FF0000',
+                    fillOpacity: 0.35,
+                    map: self.mapService.getMap(),
+                    center: newLatLng,
+                    radius: 70
+                });
+            }
+            else {
+                self.userBuffer.setCenter(newLatLng);
+            }
+
+            var icon = self.markerIcons.userCurrentLocation;            
 
             if (self.currentLocationMarker == null) {
-                self.currentLocationMarker = self.placeMarker(newLatLng, "ilapiCurrentLocationMarker",
+                self.currentLocationMarker = self.placeMarker(newLatLng, "userCurrentLocationMarker",
                     icon);
             }
             else {

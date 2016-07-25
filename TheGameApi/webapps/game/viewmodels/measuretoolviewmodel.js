@@ -1,6 +1,6 @@
 ﻿define(['ko','geojson'],
     function (ko) {
-        return function mapLayersViewModel() {
+        return function measureToolViewModel() {
             var self = this;
             self.appViewModel = null;
             self.mapService = null;

@@ -4,7 +4,7 @@ using TheGameApi.Models;
 
 namespace TheGameApi.DataAccess
 {
-    public class UserRepository : Repository<User>
+    public class UserRepository : Repository<User>, IUserRepository
     {
         public UserRepository() : base()
         {

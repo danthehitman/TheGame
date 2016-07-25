@@ -44,6 +44,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=5.0.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.5.0.2\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="DotSpatial.Analysis, Version=1.9.0.0, Culture=neutral, PublicKeyToken=df3f45fb0fe4cb0c, processorArchitecture=MSIL">
       <HintPath>..\packages\DotSpatial.Analysis.1.9\lib\net40-Client\DotSpatial.Analysis.dll</HintPath>
       <Private>True</Private>
@@ -226,6 +230,7 @@
     <Folder Include="images\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -263,22 +268,34 @@
     <Compile Include="Controllers\DiscoveryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Models\DiscoveryGenerateDto.cs" />
+    <Compile Include="Controllers\Models\ItemDto.cs" />
+    <Compile Include="Controllers\Models\JunkDto.cs" />
+    <Compile Include="Controllers\Models\UserDto.cs" />
     <Compile Include="Controllers\SessionsController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Core\Services\AuthService.cs" />
     <Compile Include="Core\Services\DiscoveryService.cs" />
+    <Compile Include="Core\Services\IDiscoveryService.cs" />
     <Compile Include="Core\Utilities\PasswordStorage.cs" />
+    <Compile Include="Core\Utilities\StringExtensions.cs" />
     <Compile Include="DataAccess\DbExtensions.cs" />
     <Compile Include="DataAccess\DiscoveryRepository.cs" />
     <Compile Include="DataAccess\GeoRepository.cs" />
     <Compile Include="DataAccess\EncounterRepository.cs" />
     <Compile Include="DataAccess\IDiscoveryRepository.cs" />
     <Compile Include="DataAccess\IGeoRepository.cs" />
+    <Compile Include="DataAccess\IItemRepository.cs" />
+    <Compile Include="DataAccess\IItemTypeRepository.cs" />
+    <Compile Include="DataAccess\IJunkClassRepository.cs" />
+    <Compile Include="DataAccess\IJunkRepository.cs" />
+    <Compile Include="DataAccess\IJunkTypeRepository.cs" />
     <Compile Include="DataAccess\IRepository.cs" />
     <Compile Include="DataAccess\ISessionRepository.cs" />
     <Compile Include="DataAccess\ItemClassRepository.cs" />
     <Compile Include="DataAccess\ItemRepository.cs" />
     <Compile Include="DataAccess\ItemTypeRepository.cs" />
+    <Compile Include="DataAccess\IItemClassRepository.cs" />
+    <Compile Include="DataAccess\IUserRepository.cs" />
     <Compile Include="DataAccess\JunkClassRepository.cs" />
     <Compile Include="DataAccess\JunkRepository.cs" />
     <Compile Include="DataAccess\JunkTypeRepository.cs" />
@@ -296,8 +313,10 @@
     <Compile Include="Models\Discovery.cs" />
     <Compile Include="Models\Encounter.cs" />
     <Compile Include="Models\Entity.cs" />
+    <Compile Include="Models\GoldLoot.cs" />
     <Compile Include="Models\GoogleLatLng.cs" />
     <Compile Include="Models\IIngredient.cs" />
+    <Compile Include="Models\ILoot.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ItemClass.cs" />
     <Compile Include="Models\ItemType.cs" />
@@ -305,6 +324,8 @@
     <Compile Include="Models\JunkClass.cs" />
     <Compile Include="Models\JunkType.cs" />
     <Compile Include="Models\GeoEntity.cs" />
+    <Compile Include="Models\Loot.cs" />
+    <Compile Include="Models\LootType.cs" />
     <Compile Include="Models\Quality.cs" />
     <Compile Include="Models\Recipe.cs" />
     <Compile Include="Models\RecipeItemClass.cs" />
@@ -358,8 +379,12 @@
     <Content Include="webapps\game\models\mapcontainer.js" />
     <Content Include="webapps\game\models\mapsettings.js" />
     <Content Include="webapps\game\models\usergeolocation.js" />
+    <Content Include="webapps\game\models\usermodel.js" />
     <Content Include="webapps\game\services\mapservice.js" />
+    <Content Include="webapps\game\services\scannerservice.js" />
+    <Content Include="webapps\game\services\theworld.js" />
     <Content Include="webapps\game\viewmodels\app.js" />
+    <Content Include="webapps\game\viewmodels\backpackviewmodel.js" />
     <Content Include="webapps\game\viewmodels\mapviewmodel.js" />
     <Content Include="webapps\game\viewmodels\measuretoolviewmodel.js" />
     <Content Include="webapps\game\viewmodels\notificationviewmodel.js" />
@@ -367,6 +392,7 @@
     <Content Include="webapps\game\viewmodels\southcontentviewmodel.js" />
     <Content Include="webapps\game\viewmodels\toolboxviewmodel.js" />
     <Content Include="webapps\game\views\app.html" />
+    <Content Include="webapps\game\views\backpackview.html" />
     <Content Include="webapps\game\views\headerview.html" />
     <Content Include="webapps\game\views\loginview.html" />
     <Content Include="webapps\game\views\northcontentview.html" />
@@ -476,7 +502,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>7598</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:7598/</IISUrl>
+          <IISUrl>http://localhost:7000/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

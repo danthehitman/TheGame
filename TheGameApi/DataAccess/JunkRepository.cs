@@ -2,7 +2,7 @@
 
 namespace TheGameApi.DataAccess
 {
-    public class JunkRepository : Repository<Junk>
+    public class JunkRepository : Repository<Junk>, IJunkRepository
     {
         public JunkRepository() : base()
         {

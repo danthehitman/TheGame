@@ -2,7 +2,7 @@
 
 namespace TheGameApi.DataAccess
 {
-    public class ItemTypeRepository : Repository<ItemType>
+    public class ItemTypeRepository : Repository<ItemType>, IItemTypeRepository
     {
         public ItemTypeRepository() : base()
         {

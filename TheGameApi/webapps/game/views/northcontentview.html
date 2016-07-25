@@ -1,8 +1,10 @@
 ﻿<div id="northContentContainer" data-bind="style: {'bottom': southContentViewModel.heightPx}">
     <div id="mapContainer"></div>
-    <div id="coordinateDisplayContainer" data-bind="with: mapViewModel"><span data-bind="text: mapCoordinates"></span></div>
+    <!--<div id="coordinateDisplayContainer" data-bind="with: mapViewModel"><span data-bind="text: mapCoordinates"></span></div>-->
     
     <!--ko if: hasGeolocation--><div id="zoomCurrentLocationButton" data-bind="click: mapViewModel.zoomCurrentLocation.bind()"></div><!--/ko-->
+    <div id="backpackButton" class="backpackButton" data-bind="slideVisible: !backpackViewModel.displayWindow(), type: 'vert', click: function(){backpackViewModel.toggleOrSetDisplay()}, with: backpackViewModel"></div>
+    <div id="backpackContainer" class="backpackContainer backpack" data-bind="compose: '/webapps/game/views/backpackview.html', slideVisible: backpackViewModel.displayWindow, type: 'scale'"></div>
     <div id="toolBoxButton" class="toolBoxButton" data-bind="slideVisible: !toolboxViewModel.displayWindow() && userConnected, type: 'vert', click: function(){toolboxViewModel.toggleOrSetDisplay()}, style: {'background': toolboxViewModel.activeTool().activeIcon}"></div>
     <div id="toolboxContainer" class="toolboxContainer toolbox" data-bind="slideVisible: toolboxViewModel.displayWindow, type: 'scale'">
         <div id="toolboxHeader" class="toolboxHeader" data-bind="click: function(){toolboxViewModel.toggleOrSetDisplay()}">

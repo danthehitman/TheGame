@@ -9,7 +9,7 @@ namespace TheGameApi.Controllers
         public static Guid GetAuthToken(HttpRequestMessage request)
         {
             Guid result = Guid.Empty;
-            Guid.TryParse(request.Headers.GetValues("Auth").FirstOrDefault(), out result);
+            Guid.TryParse(request.Headers.GetValues("auth").FirstOrDefault(), out result);
             return result;
         }
     }

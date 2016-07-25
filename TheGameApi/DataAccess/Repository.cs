@@ -19,7 +19,7 @@ namespace TheGameApi.DataAccess
             _context = context;
         }
 
-        protected readonly TheGameContext _context;
+        protected TheGameContext _context;
         protected DbSet<T> _entities;
 
         public IQueryable<T> All => _entities;
@@ -75,9 +75,22 @@ namespace TheGameApi.DataAccess
             await _context.SaveChangesAsync();
         }
 
-        void IDisposable.Dispose()
+        protected void Dispose(bool disposing)
         {
-            _context.Dispose();
+            if (disposing)
+            {
+                if (_context != null)
+                {
+                    _context.Dispose();
+                    _context = null;
+                }
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }
