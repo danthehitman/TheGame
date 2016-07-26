@@ -3,6 +3,8 @@
     <!--<div id="coordinateDisplayContainer" data-bind="with: mapViewModel"><span data-bind="text: mapCoordinates"></span></div>-->
     
     <!--ko if: hasGeolocation--><div id="zoomCurrentLocationButton" data-bind="click: mapViewModel.zoomCurrentLocation.bind()"></div><!--/ko-->
+    <div id="craftingButton" data-bind="slideVisible: !craftingViewModel.displayWindow(), type: 'vert', click: function(){craftingViewModel.toggleOrSetDisplay()}, with: craftingViewModel"></div>
+    <div id="craftingContainer" data-bind="compose: '/webapps/game/views/craftingview.html', slideVisible: craftingViewModel.displayWindow, type: 'scale'"></div>
     <div id="backpackButton" class="backpackButton" data-bind="slideVisible: !backpackViewModel.displayWindow(), type: 'vert', click: function(){backpackViewModel.toggleOrSetDisplay()}, with: backpackViewModel"></div>
     <div id="backpackContainer" class="backpackContainer backpack" data-bind="compose: '/webapps/game/views/backpackview.html', slideVisible: backpackViewModel.displayWindow, type: 'scale'"></div>
     <div id="toolBoxButton" class="toolBoxButton" data-bind="slideVisible: !toolboxViewModel.displayWindow() && userConnected, type: 'vert', click: function(){toolboxViewModel.toggleOrSetDisplay()}, style: {'background': toolboxViewModel.activeTool().activeIcon}"></div>

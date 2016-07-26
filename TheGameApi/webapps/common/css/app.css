@@ -777,6 +777,29 @@ margin: 8px 0;
 #backpackItemTypeContainer{
 }
 
+/*################################ Crafting Stuff ################################*/
+
+#backpackButton {
+    height:30px;
+    width:30px; position:absolute;
+    right: 45px;
+    bottom:65px;
+    z-index:9999;    
+    background: url(/images/crafting30.png) 0 0/ 30px no-repeat;
+    cursor:pointer;
+    display:none;
+}
+
+#backpackContent {
+    position:absolute;
+    top:20px;
+    bottom:0px;
+    left:0px;
+    right:0px;
+    margin:4px;
+}
+
+
 .tabBar{
     margin-bottom:5px;
     border-bottom:1px solid #ccc;

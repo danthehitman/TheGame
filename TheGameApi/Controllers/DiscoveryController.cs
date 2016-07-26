@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using AutoMapper;
@@ -23,9 +25,18 @@ namespace TheGameApi.Controllers
         }
 
         // GET: api/Discovery
-        public IEnumerable<Discovery> Get()
+        public async Task<IEnumerable<Discovery>> Get()
         {
-            return _discoveryRepo.All;
+            try
+            {
+                var user = new AuthService().GetUserFromToken(ControllerUtilities.GetAuthToken(Request));
+                return await _discoveryRepo.All.Where(d => d.DiscovererId == user.Id).ToListAsync(); ;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw ex;
+            }
         }
 
         [Route("api/discovery/generate")]

@@ -20,6 +20,7 @@
                 self.mapViewModel = mapViewModelArg;
                 self.apiService = apiServiceArg;
                 self.theUser = theUserArg;
+                self.loadDiscoveries();
 
                 self.setupEventSubscriptions();
 
@@ -28,6 +29,20 @@
 
             self.setupEventSubscriptions = function () {
                 userGeoLocation.mostRecentPosition.subscribe(self.onUserLocationChanged);
+            };
+
+            self.loadDiscoveries = function () {
+                self.apiService.getDiscoveries(self.getDiscoveriesSuccessHandler, self.getDiscoveriesErrorHandler);
+            };
+
+            self.getDiscoveriesSuccessHandler = function (data) {
+                for (i = 0; i < data.length; i++) {
+                    self.addDiscovery(data[i]);
+                }
+            };
+
+            self.getDiscoveriesErrorHandler = function () {
+
             };
 
             self.onUserLocationChanged = function () {

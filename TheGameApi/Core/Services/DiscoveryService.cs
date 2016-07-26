@@ -91,6 +91,7 @@ namespace TheGameApi.Core.Services
             }
 
             await _discoveryRepo.DeleteAsync(discoveryId);
+            await _discoveryRepo.SaveAsync();
             return loot;
         }
 

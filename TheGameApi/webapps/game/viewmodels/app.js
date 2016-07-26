@@ -79,13 +79,15 @@
                 //TODO: DEF Need a more elegant solution here.
                 self.checkHeadSize();
                 self.loadSettings();
+                self.theWorld.initialize(self.mapViewModel, self.integraApi, self.theUser);
+                self.backpackViewModel.initialize(self, self.theWorld, self.theUser);
             };
 
             self.initializeGoogleApis = function () {
                 self.mapSettings = new MapSettings().initialize();
                 var browserKey = self.mapSettings.browserkey;
 
-                require(['async!https://maps.googleapis.com/maps/api/js?v=3&sensor=false&libraries=places,visualization,drawing&key={0}'.format(browserKey)], function () {
+                require(['async!https://maps.googleapis.com/maps/api/js?v=3&sensor=false&libraries=geometry,visualization,drawing&key={0}'.format(browserKey)], function () {
                     self.googleApisLoaded();
                 });
             };
@@ -206,7 +208,6 @@
                 self.userConnected(true);
                 //self.integraApi.getUserUiConfig(self.configurationLoadedHandler, self.configurationErrorHandler);
                 self.integraApi.getLoggedInUser(self.getUserSuccessHandler, self.getUserErrorHandler);
-                self.configurationLoadedHandler();
                 self.updateAuthButtonText();
             };
 
@@ -230,9 +231,7 @@
 
             self.getUserSuccessHandler = function (data) {
                 self.theUser.initialize(data.Id, self.mapViewModel, self.integraApi);
-                self.theWorld.initialize(self.mapViewModel, self.integraApi, self.theUser);
-                self.backpackViewModel.initialize(self, self.theWorld, self.theUser);
-
+                self.configurationLoadedHandler();
             };
 
             self.getUserErrorHandler = function (error) {

@@ -27,6 +27,8 @@ namespace TheGameApi
                new InjectionFactory(c => new JunkTypeRepository()));
             container.RegisterType<IItemTypeRepository>(new TransientLifetimeManager(),
                new InjectionFactory(c => new ItemTypeRepository()));
+            container.RegisterType<IRecipeRepository>(new TransientLifetimeManager(),
+               new InjectionFactory(c => new RecipeRepository()));
             container.RegisterType<IDiscoveryService>(new TransientLifetimeManager(),
                 new InjectionFactory(c => new DiscoveryService(c.Resolve<IItemRepository>(),
                 c.Resolve<IJunkRepository>(), c.Resolve<IDiscoveryRepository>(),

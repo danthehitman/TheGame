@@ -267,6 +267,17 @@ define(['pubsub', 'guidgen', 'utils'],
                 });
             };
 
+            self.getDiscoveries = function (successHandler, errorHandler) {
+                $.ajax({
+                    type: 'GET',
+                    headers: { "auth": self.sessionToken },
+                    url: self.APIROOT + "discovery",
+                    async: true,
+                    success: successHandler,
+                    error: errorHandler
+                });
+            };
+
             self.generateDiscoveriesFromItem = function (itemId, point, successHandler, errorHandler) {
                 var postData = {
                     itemId: itemId,

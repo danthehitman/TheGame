@@ -271,6 +271,7 @@
     <Compile Include="Controllers\Models\ItemDto.cs" />
     <Compile Include="Controllers\Models\JunkDto.cs" />
     <Compile Include="Controllers\Models\UserDto.cs" />
+    <Compile Include="Controllers\RecipiesController.cs" />
     <Compile Include="Controllers\SessionsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Core\Services\AuthService.cs" />
@@ -289,6 +290,7 @@
     <Compile Include="DataAccess\IJunkClassRepository.cs" />
     <Compile Include="DataAccess\IJunkRepository.cs" />
     <Compile Include="DataAccess\IJunkTypeRepository.cs" />
+    <Compile Include="DataAccess\IRecipeRepository.cs" />
     <Compile Include="DataAccess\IRepository.cs" />
     <Compile Include="DataAccess\ISessionRepository.cs" />
     <Compile Include="DataAccess\ItemClassRepository.cs" />

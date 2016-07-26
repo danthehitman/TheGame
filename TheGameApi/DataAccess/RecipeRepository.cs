@@ -2,7 +2,7 @@
 
 namespace TheGameApi.DataAccess
 {
-    public class RecipeRepository : Repository<Recipe>
+    public class RecipeRepository : Repository<Recipe>, IRecipeRepository
     {
         public RecipeRepository() : base()
         {
