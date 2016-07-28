@@ -98,48 +98,55 @@ function (ko, pubsub, guidgen, utils, userGeoLocation, directionUtils, mapServic
             }
             var clickLoc = mouseEvent.latLng;
             var position = userGeoLocation.mostRecentPosition();
-
-            var icon = {
-                url: "/images/rocket.svg",
-                anchor: new google.maps.Point(25,50),
-                scaledSize: new google.maps.Size(50, 50)
-            };
-
-            var marker = new google.maps.Marker({
-                position: clickLoc,
-                map: self.mapService.getMap(),
-                draggable: false,
-                icon: icon,
-                zIndex: -20
-            });
-
             var newLatLng = self.createLatLong(position.coords.latitude, position.coords.longitude);
-            var lineSymbol = {
-                path: google.maps.SymbolPath.CIRCLE,
-                scale: 8,
-                strokeColor: '#393'
-            };
-            var line = new google.maps.Polyline({
-                path: [newLatLng, clickLoc],
-                icons: [
-                {
-                    icon: icon,
-                    offset: '100%'
-                }],
-                map: self.mapService.getMap()
-            });
-            self.animateCircle(line);
+
+            //var icon = {
+            //    url: "/images/drone.svg"
+            //};
+
+            //var marker = new google.maps.Marker({
+            //    position: clickLoc,
+            //    map: self.mapService.getMap(),
+            //    draggable: false,
+            //    icon: icon,
+            //    zIndex: -20
+            //});
+
+            //var newLatLng = self.createLatLong(position.coords.latitude, position.coords.longitude);
+            //var lineSymbol = {
+            //    path: google.maps.SymbolPath.CIRCLE,
+            //    scale: 8,
+            //    strokeColor: '#393'
+            //};
+
+            //var line = new google.maps.Polyline({
+            //    path: [newLatLng, clickLoc],
+            //    icons: [
+            //    {
+            //        icon: icon,
+            //        offset: '100%'
+            //    }
+            //    ],
+            //    map: self.mapService.getMap()
+            //});
+            var heading = newLatLng.getHeading(clickLoc);
+            self.animateInLine(newLatLng, 100, .01, heading);
         };
 
-        self.animateCircle = function (line) {
-            var count = 0;
-            window.setInterval(function () {
-                count = (count +1) % 200;
+        self.animateInLine = function (startPos, times, increments, heading) {
+            var newTimes = times -1;
+            var nextPoint = startPos.destinationPoint(heading, increments);
+            self.currentLocationMarker.setPosition(nextPoint);
+            if (times > 0)
+                setTimeout(function () { self.animateInLine(nextPoint, newTimes, increments, heading ); }, 100);
+        };
 
-                var icons = line.get('icons');
-                icons[0].offset = (count / 2) + '%';
-                line.set('icons', icons);
-                }, 20);
+        self.animateInCircle = function (startPos, times) {
+            var newTimes = times - 1;
+            var nextPoint = startPos.destinationPoint(times, .1);
+            self.currentLocationMarker.setPosition(nextPoint);
+            if (times > 0)
+                setTimeout(function () { self.animateInCircle(startPos, newTimes); }, 200);
         };
 
         //Methods
@@ -423,8 +430,8 @@ function (ko, pubsub, guidgen, utils, userGeoLocation, directionUtils, mapServic
             else {
                 //self.markerIcons.currentLocationInactive
                 self.currentLocationMarker.setPosition(newLatLng);
-                self.currentLocationMarker.setIcon(icon);
-                self.currentLocationMarker.setMap(self.mapService.getMap());
+                //self.currentLocationMarker.setIcon(icon);
+                //self.currentLocationMarker.setMap(self.mapService.getMap());
             }
         };
 
