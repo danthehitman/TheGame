@@ -268,10 +268,18 @@
     <Compile Include="Controllers\DiscoveryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Models\DiscoveryGenerateDto.cs" />
+    <Compile Include="Controllers\Models\EntityDto.cs" />
+    <Compile Include="Controllers\Models\ItemClassDto.cs" />
+    <Compile Include="Controllers\Models\JunkClassDto.cs" />
+    <Compile Include="Controllers\Models\RecipeItemClassDto.cs" />
     <Compile Include="Controllers\Models\ItemDto.cs" />
+    <Compile Include="Controllers\Models\ItemTypeDto.cs" />
+    <Compile Include="Controllers\Models\RecipeJunkClassDto.cs" />
     <Compile Include="Controllers\Models\JunkDto.cs" />
+    <Compile Include="Controllers\Models\JunkTypeDto.cs" />
+    <Compile Include="Controllers\Models\RecipeDto.cs" />
     <Compile Include="Controllers\Models\UserDto.cs" />
-    <Compile Include="Controllers\RecipiesController.cs" />
+    <Compile Include="Controllers\RecipesController.cs" />
     <Compile Include="Controllers\SessionsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Core\Services\AuthService.cs" />
@@ -387,6 +395,7 @@
     <Content Include="webapps\game\services\theworld.js" />
     <Content Include="webapps\game\viewmodels\app.js" />
     <Content Include="webapps\game\viewmodels\backpackviewmodel.js" />
+    <Content Include="webapps\game\viewmodels\craftingviewmodel.js" />
     <Content Include="webapps\game\viewmodels\mapviewmodel.js" />
     <Content Include="webapps\game\viewmodels\measuretoolviewmodel.js" />
     <Content Include="webapps\game\viewmodels\notificationviewmodel.js" />
@@ -395,6 +404,7 @@
     <Content Include="webapps\game\viewmodels\toolboxviewmodel.js" />
     <Content Include="webapps\game\views\app.html" />
     <Content Include="webapps\game\views\backpackview.html" />
+    <Content Include="webapps\game\views\craftingview.html" />
     <Content Include="webapps\game\views\headerview.html" />
     <Content Include="webapps\game\views\loginview.html" />
     <Content Include="webapps\game\views\northcontentview.html" />

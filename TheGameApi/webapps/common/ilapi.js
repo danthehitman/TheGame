@@ -278,6 +278,17 @@ define(['pubsub', 'guidgen', 'utils'],
                 });
             };
 
+            self.getRecipes = function (successHandler, errorHandler) {
+                $.ajax({
+                    type: 'GET',
+                    headers: { "auth": self.sessionToken },
+                    url: self.APIROOT + "recipes",
+                    async: true,
+                    success: successHandler,
+                    error: errorHandler
+                });
+            };
+
             self.generateDiscoveriesFromItem = function (itemId, point, successHandler, errorHandler) {
                 var postData = {
                     itemId: itemId,

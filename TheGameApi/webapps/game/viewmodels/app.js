@@ -1,7 +1,9 @@
-﻿define(['knockout', 'pubsub', 'utils', 'ilapi', 'toolboxViewModel', 'backpackViewModel', 'mapViewModel', 'mapSettings', 'southContentViewModel', 'notificationViewModel', 'redLineViewModel', 'userGeoLocation',
-    "scannerService", "theWorld", "userModel",
+﻿define(['knockout', 'pubsub', 'utils', 'ilapi', 'toolboxViewModel', 'backpackViewModel', 'craftingViewModel',
+    'mapViewModel', 'mapSettings', 'southContentViewModel', 'notificationViewModel',
+    'redLineViewModel', 'userGeoLocation', "scannerService", "theWorld", "userModel",
     'ilapi', 'fadeVisible', 'slideVisible', 'jqueryFileDownload'],
-    function (ko, pubsub, utils, Ilapi, ToolboxViewModel, BackpackViewModel, MapViewModel, MapSettings, SouthContentViewModel, NotificationViewModel,
+    function (ko, pubsub, utils, Ilapi, ToolboxViewModel, BackpackViewModel, CraftingViewModel, MapViewModel,
+        MapSettings, SouthContentViewModel, NotificationViewModel,
         RedLineViewModel, userGeoLocation, ScannerService, TheWorld, TheUser) {
         return function appViewModel() {
             var self = this;
@@ -20,6 +22,7 @@
             // View Models==================================================================================
             self.toolboxViewModel = null;
             self.backpackViewModel = null;
+            self.craftingViewModel = null;
             self.mapSettings = null;
             self.southContentViewModel = null;
             self.notificationViewModel = null;
@@ -81,6 +84,7 @@
                 self.loadSettings();
                 self.theWorld.initialize(self.mapViewModel, self.integraApi, self.theUser);
                 self.backpackViewModel.initialize(self, self.theWorld, self.theUser);
+                self.craftingViewModel.initialize(self.integraApi, self.theUser, self.notificationViewModel)
             };
 
             self.initializeGoogleApis = function () {
@@ -99,6 +103,7 @@
                 self.mapViewModel = new MapViewModel(self.integraApi, self.mapSettings);
                 self.toolboxViewModel = new ToolboxViewModel();
                 self.backpackViewModel = new BackpackViewModel();
+                self.craftingViewModel = new CraftingViewModel();
                 self.southContentViewModel = new SouthContentViewModel();
                 self.redlineViewModel = new RedLineViewModel();
             };

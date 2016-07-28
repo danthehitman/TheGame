@@ -1,0 +1,29 @@
+﻿<div class="windowHeader" data-bind="click: function(){craftingViewModel.toggleOrSetDisplay()}">
+    <span class="windowHeaderTextContainer">Crafting</span>
+    <span class="windowCloseButtonContainer"></span>
+</div>
+<div class="windowContent">    
+    <div class="tabBar" data-bind="foreach:craftingViewModel.allTabs()">
+        <div class="tabItem" data-bind="text:$data, click:function(){$parent.craftingViewModel.activeTab($data);}, css: {active: $parent.craftingViewModel.activeTab() == $data}"></div>
+    </div>
+    <!-- ko if: craftingViewModel.mode() == "recipe"-->
+    <div id="craftingRecipeContainer">
+        <div data-bind="foreach:craftingViewModel.getRecipesForTab">
+            <span data-bind="text:$data.Name, style:{color: $parent.craftingViewModel.canCraftRecipe($data) == true ? 'green' : 'red'}"></span>
+            <span> | </span>
+            <!--<span data-bind="text: $data.expanded() === true ? '-' : '+', click:function(){$data.expanded(!$data.expanded());}"></span>
+            <div id="backpackItemDisplayContainer" data-bind="foreach:$data.junk, style:{display: $data.expanded() === true ? 'block' : 'none'}">
+                <span data-bind="text:$data.Type.Name"></span>
+                <span data-bind="text:$data.Quality"></span>
+                <br />
+            </div>-->
+            <br />
+        </div>
+    </div>
+    <!-- /ko-->
+    <!-- ko if: craftingViewModel.mode() == "crafting"-->
+    <div>
+        crafting
+    </div>
+    <!-- /ko-->
+</div>

@@ -4,9 +4,8 @@ using TheGameApi.Models;
 
 namespace TheGameApi.Controllers.Models
 {
-    public class UserDto
+    public class UserDto : ResourceDto
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public DateTime EnrollDate { get; set; }

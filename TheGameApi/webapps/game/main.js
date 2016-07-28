@@ -38,6 +38,7 @@
             notificationViewModel: 'viewmodels/notificationviewmodel',
             toolboxViewModel: 'viewmodels/toolboxviewmodel',
             backpackViewModel: 'viewmodels/backpackviewmodel',
+            craftingViewModel: 'viewmodels/craftingviewmodel',
             measureToolViewModel: 'viewmodels/measuretoolviewmodel',
             redLineViewModel: 'viewmodels/redlineviewmodel',
             mapService: 'services/mapservice',

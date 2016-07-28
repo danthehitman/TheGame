@@ -1,5 +1,5 @@
-﻿define(['ko', 'pubsub', 'userGeoLocation'],
-    function (ko, pubsub, userGeoLocation) {
+﻿define(['ko', 'pubsub','utils', 'userGeoLocation'],
+    function (ko, pubsub, utils, userGeoLocation) {
         return function theWorld() {
             var self = this;
 
@@ -24,6 +24,37 @@
                 return self;
             };
 
+            self.hasItemOfClassAndEffectiveness = function (classId, minEffectiveness) {
+                var validTypes = self.itemTypes().filter(function (i) {
+                    return utils.searchArrayByProp(i.classes, "Id", classId) != null;
+                });
+                if (validTypes.length > 0) {
+                    validItems = validTypes.filter(function (type) {
+                        for (var i = 0; i < type.items().length; i++) {
+                            if (type.items()[i].Effectiveness >= minEffectiveness)
+                                return true;
+                        }
+                    });
+                    if (validItems.length > 0)
+                        return true;
+                }
+                return false;
+            };
+
+            self.hasJunkOfClassAndEffectiveness = function (classId, minEffectiveness) {
+                var validTypes = self.junkTypes().filter(function (i) {
+                    return utils.searchArrayByProp(i.classes, "Id", classId) != null;
+                });
+                if (validTypes.length > 0) {
+                    validJunk = validTypes.filter(function (type) {
+                        return type.effectiveness >= minEffectiveness;
+                    });
+                    if (validJunk.length > 0)
+                        return true;
+                }
+                return false;
+            };
+
             self.addGold = function (ammount) {
                 self.gold(self.gold + ammount);
             };
@@ -31,7 +62,7 @@
             self.addItem = function (item) {
                 var itemType = self.getItemType(item.Type.Id);
                 if (itemType == null) {
-                    itemType = new self.itemType(item.Type.Id, item.Type.Name);
+                    itemType = new self.itemType(item);
                     self.itemTypes.push(itemType);
                 }
                 itemType.items.push(item);
@@ -40,7 +71,7 @@
             self.addJunk = function (junk) {
                 var junkType = self.getJunkType(junk.Type.Id);
                 if (junkType == null) {
-                    junkType = new self.junkType(junk.Type.Id, junk.Type.Name);
+                    junkType = new self.junkType(junk);
                     self.junkTypes.push(junkType);
                 }
                 junkType.junk.push(junk);
@@ -105,10 +136,11 @@
                 return match;
             };
 
-            self.itemType = function (typeId, typeName) {
+            self.itemType = function (item) {
                 this.expanded = ko.observable(false);
-                this.id = typeId;
-                this.name = typeName;
+                this.id = item.Type.Id;
+                this.name = item.Type.Name;
+                this.classes = item.Type.Classes;
                 this.items = ko.observableArray();
                 this.count = ko.computed(function () { return this.items().length; }.bind(this));
                 this.addItem = function (item) {
@@ -119,10 +151,12 @@
                 }.bind(this);
             };
 
-            self.junkType = function (typeId, typeName) {
+            self.junkType = function (junk) {
                 this.expanded = ko.observable(false);
-                this.id = typeId;
-                this.name = typeName;
+                this.id = junk.Type.Id;
+                this.name = junk.Type.Name;
+                this.classes = junk.Type.Classes;
+                this.effectiveness = junk.Type.Effectiveness;
                 this.junk = ko.observableArray();
                 this.count = ko.computed(function () { return this.junk().length; }.bind(this));
                 this.addJunk = function (junk) {

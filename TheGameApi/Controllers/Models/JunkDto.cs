@@ -3,10 +3,9 @@ using TheGameApi.Models;
 
 namespace TheGameApi.Controllers.Models
 {
-    public class JunkDto : ILoot
+    public class JunkDto : ResourceDto, ILoot
     {
-        public Guid Id { get; set; }
-        public JunkType Type { get; set; }
+        public JunkTypeDto Type { get; set; }
         public Guid TypeId { get; set; }
         public string Quality { get; set; }
         public User Owner { get; set; }
