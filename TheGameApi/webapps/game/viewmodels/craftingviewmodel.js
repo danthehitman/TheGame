@@ -4,6 +4,11 @@
         function craftingViewModel() {
             var self = this;
 
+            self.modes = {
+                recipe: "recipe",
+                crafting: "crafting"
+            };
+
             self.allTabs = ko.observableArray(["All"]);
 
             self.recipes = ko.observableArray();
@@ -14,6 +19,12 @@
             self.notificationViewModel = null;
             self.theUser = null;
             self.mode = ko.observable("recipe");
+
+            self.selectedRecipe = ko.observable();
+
+            self.showIngredientSelector = ko.observable(false);
+            self.currentRecipeClassForSelecting = ko.observable();
+            self.selectedIngredient = ko.observable();
 
             baseMaker.initClass(self, baseWindowViewModel);
 
@@ -53,30 +64,66 @@
                 }
             };
 
+            self.loadRecipesErroHandler = function (error) {
+
+            };
+
             self.canCraftRecipe = function (recipe) {
                 var canCraft = true;
                 var i;
                 for (i = 0; i < recipe.RecipeItemClasses.length; i++) {
                     var recipeItemClass = recipe.RecipeItemClasses[i];
+                    recipeItemClass["userCanFulfill"] = true;
                     if (!self.theUser.hasItemOfClassAndEffectiveness(recipeItemClass.ItemClass.Id, recipeItemClass.MinimumEffectiveness)) {
                         recipeItemClass["userCanFulfill"] = false;
                         canCraft = false;
                     }
-                    recipeItemClass["userCanFulfill"] = true;
+                    recipeItemClass.selectedIngredient = ko.observable();
                 }
                 for (i = 0; i < recipe.RecipeJunkClasses.length; i++) {
                     var recipeJunkClass = recipe.RecipeJunkClasses[i];
+                    recipeJunkClass["userCanFulfill"] = true;
                     if (!self.theUser.hasJunkOfClassAndEffectiveness(recipeJunkClass.JunkClass.Id, recipeJunkClass.MinimumEffectiveness)){
                         recipeJunkClass["userCanFulfill"] = false;
                         canCraft = false;
                     }
-                    recipeJunkClass["userCanFulfill"] = true;
+                    recipeJunkClass.selectedIngredient = ko.observable();
                 }
                 return canCraft;
             };
 
-            self.loadRecipesErroHandler = function (error) {
+            self.loadForCrafting = function (recipe) {
+                self.selectedRecipe(recipe);
+                self.mode(self.modes.crafting);
 
+            };
+
+            self.selectIngredient = function (recipeClass) {
+                self.currentRecipeClassForSelecting(recipeClass);
+                self.showIngredientSelector(true);
+            };
+
+            self.getIngredientForSelectedClass = ko.computed(function () {
+                if (self.currentRecipeClassForSelecting() != null) {
+                    if (self.currentRecipeClassForSelecting().JunkClass)
+                        return self.theUser.getJunkByClassId(self.currentRecipeClassForSelecting().JunkClass.Id);
+                    else if (self.currentRecipeClassForSelecting().ItemClass)
+                        return self.theUser.getItemByClassId(self.currentRecipeClassForSelecting().ItemClass.Id);
+                }
+                else
+                    return [];
+            });
+
+            self.chooseIngredient = function () {
+                self.currentRecipeClassForSelecting().selectedIngredient(self.selectedIngredient());
+                self.showIngredientSelector(false);
+            };
+
+            self.getSelectBoxTextForChooseIngredientItem = function (item) {
+                if (item.LootType == "Junk")
+                    return item.Type.Name + ' ' + item.Quality + ' ' + item.Type.Effectiveness;
+                else if (item.LootType == "Item")
+                    return item.Name + ' ' + item.Effectiveness;
             };
 
             return self;

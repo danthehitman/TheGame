@@ -166,5 +166,31 @@
                     this.junk.remove(junk);
                 }.bind(this);
             };
+
+            self.getJunkByClassId = function (junkClassId) {
+                var matchingJunk = [];
+
+                for (var i = 0; i < self.junkTypes().length; i++){
+                    for (var j = 0; j < self.junkTypes()[i].classes.length; j++){
+                        if (self.junkTypes()[i].classes[j].Id == junkClassId) {
+                            matchingJunk = matchingJunk.concat(self.junkTypes()[i].junk())
+                        }
+                    }
+                }
+                return matchingJunk;
+            };
+
+            self.getItemByClassId = function (itemClassId) {
+                var matchingItems = [];
+
+                for (var i = 0; i < self.itemTypes().length; i++) {
+                    for (var j = 0; j < self.itemTypes()[i].classes.length; j++) {
+                        if (self.itemTypes()[i].classes[j].Id == itemClassId) {
+                            matchingItems = matchingItems.concat(self.itemTypes()[i].items())
+                        }
+                    }
+                }
+                return matchingItems;
+            };
         };
     });

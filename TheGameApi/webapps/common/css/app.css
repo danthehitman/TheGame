@@ -839,6 +839,16 @@ margin: 8px 0;
     display:none;
 }
 
+.craftingIngredientSelector {
+    top:20px;
+    left:20px;
+    width:300px;
+    height:300px;
+    border:2px solid black;
+    position:absolute;
+    background:white;
+}
+
 
 .tabBar{
     margin-bottom:5px;

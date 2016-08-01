@@ -6,11 +6,14 @@
     <div class="tabBar" data-bind="foreach:craftingViewModel.allTabs()">
         <div class="tabItem" data-bind="text:$data, click:function(){$parent.craftingViewModel.activeTab($data);}, css: {active: $parent.craftingViewModel.activeTab() == $data}"></div>
     </div>
-    <!-- ko if: craftingViewModel.mode() == "recipe"-->
+    <!-- ko if: craftingViewModel.mode() == craftingViewModel.modes.recipe-->
     <div id="craftingRecipeContainer">
         <div data-bind="foreach:craftingViewModel.getRecipesForTab">
             <span data-bind="text:$data.Name, style:{color: $parent.craftingViewModel.canCraftRecipe($data) == true ? 'green' : 'red'}"></span>
+            <!-- ko if: $parent.craftingViewModel.canCraftRecipe($data) == true-->
             <span> | </span>
+            <span data-bind="click:function(){$parent.craftingViewModel.loadForCrafting($data);}">craft</span>
+            <!-- /ko-->
             <!--<span data-bind="text: $data.expanded() === true ? '-' : '+', click:function(){$data.expanded(!$data.expanded());}"></span>
             <div id="backpackItemDisplayContainer" data-bind="foreach:$data.junk, style:{display: $data.expanded() === true ? 'block' : 'none'}">
                 <span data-bind="text:$data.Type.Name"></span>
@@ -21,9 +24,38 @@
         </div>
     </div>
     <!-- /ko-->
-    <!-- ko if: craftingViewModel.mode() == "crafting"-->
+    <!-- ko if: craftingViewModel.mode() == craftingViewModel.modes.crafting-->
     <div>
-        crafting
+        <div data-bind="text:craftingViewModel.selectedRecipe().Name"></div>
+        <div>Items</div>
+        <div data-bind="foreach:craftingViewModel.selectedRecipe().RecipeItemClasses">
+            <span data-bind="text:$data.ItemClass.Name"></span>
+            <span> | </span>
+            <span data-bind="text:$data.selectedIngredient().Name, style:{display: $data.selectedIngredient() != null ? 'inline-block' : 'none'}"></span>
+            <span data-bind="click:function(){$parent.craftingViewModel.selectIngredient($data);}">select item</span>
+            <br />
+        </div>
+        <div>Junk</div>
+        <div data-bind="foreach:craftingViewModel.selectedRecipe().RecipeJunkClasses">
+            <span data-bind="text:$data.JunkClass.Name"></span>
+            <span> | </span>
+            <span data-bind="text:$data.selectedIngredient() != null ?
+                  $data.selectedIngredient().Type.Name + ' ' + $data.selectedIngredient().Quality :
+                  '', style:{display: $data.selectedIngredient() != null ? 'inline-block' : 'none'}"></span>
+            <span data-bind="click:function(){$parent.craftingViewModel.selectIngredient($data);}">select item</span>
+            <br />
+        </div>
+    </div>
+    <!-- /ko-->
+    <!-- ko if: craftingViewModel.showIngredientSelector() == true-->
+    <div class="craftingIngredientSelector">
+        <div>
+            <select data-bind="options: craftingViewModel.getIngredientForSelectedClass(), optionsText: function(item) {return craftingViewModel.getSelectBoxTextForChooseIngredientItem(item);},
+                    value: craftingViewModel.selectedIngredient"></select>
+            <span> | </span>
+            <span data-bind="click:function(){craftingViewModel.chooseIngredient();}">choose</span>
+            <br />
+        </div>
     </div>
     <!-- /ko-->
 </div>
