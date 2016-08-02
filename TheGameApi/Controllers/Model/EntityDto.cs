@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TheGameApi.Controllers.Models
+namespace TheGameApi.Controllers.Model
 {
     public class ResourceDto
     {

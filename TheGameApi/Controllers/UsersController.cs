@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using AutoMapper;
-using TheGameApi.Controllers.Models;
+using TheGameApi.Controllers.Model;
 using TheGameApi.DataAccess;
 
 namespace TheGameApi.Controllers

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TheGameApi.Controllers.Models
+namespace TheGameApi.Controllers.Model
 {
     public class JunkTypeDto : ResourceDto
     {

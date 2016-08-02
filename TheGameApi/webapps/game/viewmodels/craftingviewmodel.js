@@ -73,18 +73,18 @@
                 var i;
                 for (i = 0; i < recipe.RecipeItemClasses.length; i++) {
                     var recipeItemClass = recipe.RecipeItemClasses[i];
-                    recipeItemClass["userCanFulfill"] = true;
+                    recipeItemClass["userCanFulfill"] = ko.observable(true);
                     if (!self.theUser.hasItemOfClassAndEffectiveness(recipeItemClass.ItemClass.Id, recipeItemClass.MinimumEffectiveness)) {
-                        recipeItemClass["userCanFulfill"] = false;
+                        recipeItemClass["userCanFulfill"](false);
                         canCraft = false;
                     }
                     recipeItemClass.selectedIngredient = ko.observable();
                 }
                 for (i = 0; i < recipe.RecipeJunkClasses.length; i++) {
                     var recipeJunkClass = recipe.RecipeJunkClasses[i];
-                    recipeJunkClass["userCanFulfill"] = true;
+                    recipeJunkClass["userCanFulfill"] = ko.observable(true);
                     if (!self.theUser.hasJunkOfClassAndEffectiveness(recipeJunkClass.JunkClass.Id, recipeJunkClass.MinimumEffectiveness)){
-                        recipeJunkClass["userCanFulfill"] = false;
+                        recipeJunkClass["userCanFulfill"](false);
                         canCraft = false;
                     }
                     recipeJunkClass.selectedIngredient = ko.observable();
@@ -125,6 +125,23 @@
                 else if (item.LootType == "Item")
                     return item.Name + ' ' + item.Effectiveness;
             };
+
+            self.isRecipeReadyToCraft = ko.computed(function () {
+                if (self.selectedRecipe() == null)
+                    return false;
+                for (i = 0; i < self.selectedRecipe().RecipeJunkClasses.length; i++) {
+                    if (self.selectedRecipe().RecipeJunkClasses[i].selectedIngredient() == null) {
+                        return false;
+                    }
+                }
+
+                for (i = 0; i < self.selectedRecipe().RecipeItemClasses.length; i++) {
+                    if (self.selectedRecipe().RecipeItemClasses[i].selectedIngredient() == null) {
+                        return false;
+                    }
+                }
+                return true;
+            });
 
             return self;
         };

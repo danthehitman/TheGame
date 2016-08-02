@@ -1,7 +1,7 @@
 ﻿using System;
 using TheGameApi.Models;
 
-namespace TheGameApi.Controllers.Models
+namespace TheGameApi.Controllers.Model
 {
     public class JunkDto : ResourceDto, ILoot
     {

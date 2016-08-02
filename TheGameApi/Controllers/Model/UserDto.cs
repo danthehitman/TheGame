@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using TheGameApi.Models;
 
-namespace TheGameApi.Controllers.Models
+namespace TheGameApi.Controllers.Model
 {
     public class UserDto : ResourceDto
     {

@@ -3,7 +3,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web.Http;
 using AutoMapper;
-using TheGameApi.Controllers.Models;
+using TheGameApi.Controllers.Model;
 using TheGameApi.DataAccess;
 
 namespace TheGameApi.Controllers
@@ -28,6 +28,12 @@ namespace TheGameApi.Controllers
                 .Include(r => r.OutputItem.Classes)
                 .ToList();
             return Mapper.Map<IList<RecipeDto>>(recipes);
+        }
+
+        public ItemDto PostCraftRecipe(PostCraftRecipeDto dto)
+        {
+
+            return null;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace TheGameApi.Controllers.Models
+﻿namespace TheGameApi.Controllers.Model
 {
     public class ItemClassDto : ResourceDto
     {

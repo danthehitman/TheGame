@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
-using TheGameApi.Controllers.Models;
+using TheGameApi.Controllers.Model;
 using TheGameApi.Models;
 
 namespace TheGameApi

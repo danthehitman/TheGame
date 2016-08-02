@@ -33,6 +33,10 @@ namespace TheGameApi
                 new InjectionFactory(c => new DiscoveryService(c.Resolve<IItemRepository>(),
                 c.Resolve<IJunkRepository>(), c.Resolve<IDiscoveryRepository>(),
                 c.Resolve<IJunkTypeRepository>(), c.Resolve<IItemTypeRepository>())));
+            container.RegisterType<ICraftingService>(new TransientLifetimeManager(),
+                new InjectionFactory(c => new CraftingService(c.Resolve<IItemRepository>(),
+                c.Resolve<IJunkRepository>(), c.Resolve<IJunkTypeRepository>(), c.Resolve<IItemTypeRepository>())));
+
 
             config.DependencyResolver = new UnityResolver(container);
 
