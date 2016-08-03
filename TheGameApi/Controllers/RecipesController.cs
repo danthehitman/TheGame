@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Http;
 using AutoMapper;
 using TheGameApi.Controllers.Model;
+using TheGameApi.Core.Services;
 using TheGameApi.DataAccess;
 
 namespace TheGameApi.Controllers
@@ -11,10 +12,12 @@ namespace TheGameApi.Controllers
     public class RecipesController : ApiController
     {
         IRecipeRepository _recipeRepo;
+        ICraftingService _craftingService;
 
-        public RecipesController(IRecipeRepository recipeRepo)
+        public RecipesController(IRecipeRepository recipeRepo, ICraftingService craftingService)
         {
             _recipeRepo = recipeRepo;
+            _craftingService = craftingService;
         }
 
         // GET: api/Recipes

@@ -1,6 +1,6 @@
 ﻿namespace TheGameApi.Core.Services
 {
-    interface ICraftingService
+    public interface ICraftingService
     {
     }
 }
