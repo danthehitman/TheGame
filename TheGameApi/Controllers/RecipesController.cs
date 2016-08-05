@@ -35,7 +35,7 @@ namespace TheGameApi.Controllers
 
         public ItemDto PostCraftRecipe(PostCraftRecipeDto dto)
         {
-            return _craftingService.CraftItemRecipe(dto.RecipeId, dto.Ingredients.ToList());
+            return Mapper.Map<ItemDto>(_craftingService.CraftItemRecipe(dto.RecipeId, dto.Ingredients.ToList()));
         }
     }
 }

@@ -35,7 +35,8 @@ namespace TheGameApi
                 c.Resolve<IJunkTypeRepository>(), c.Resolve<IItemTypeRepository>())));
             container.RegisterType<ICraftingService>(new TransientLifetimeManager(),
                 new InjectionFactory(c => new CraftingService(c.Resolve<IItemRepository>(),
-                c.Resolve<IJunkRepository>(), c.Resolve<IJunkTypeRepository>(), c.Resolve<IItemTypeRepository>())));
+                c.Resolve<IJunkRepository>(), c.Resolve<IJunkTypeRepository>(), c.Resolve<IItemTypeRepository>(),
+                c.Resolve<IRecipeRepository>())));
 
 
             config.DependencyResolver = new UnityResolver(container);
