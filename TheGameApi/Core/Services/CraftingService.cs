@@ -33,10 +33,10 @@ namespace TheGameApi.Core.Services
             if (recipe == null)
                 throw new Exception("Recipe not found.");
 
-            var items = new List<Item>();
-            var junks = new List<Junk>();
-
-
+            var fulFilledItemTypes = new List<Item>();
+            var fulFilledItemClasses = new List<Item>();
+            var fulFilledJunkTypes = new List<Junk>();
+            var fulFilledJunkClasses = new List<Junk>();
 
             foreach (var ing in ingredients)
             {
@@ -46,15 +46,42 @@ namespace TheGameApi.Core.Services
                     if (item == null)
                         throw new Exception($"Item with ID {ing.Id} not found.");
 
-                    var itemMatch =
-                        recipe.ItemTypes.Where(i => i.Id == item.TypeId && item.Effectiveness > i.MinEffectiveness
-                                                    && item.Effectiveness < i.MaxEffectiveness).OrderBy(i => i.MinEffectiveness).FirstOrDefault();
+                    var itemClassMatch = FindMatchedItemClass(item, recipe);
 
-                    if (itemMatch == null)
-                        throw new Exception($"Item {item.Name} with effectiveness {item.Effectiveness} " +
-                                            $"does not meet either the effectiveness requirements or the  type requirements for the recipe.");
-
-                    recipe.ItemTypes.Remove(itemMatch);
+                    if (itemClassMatch != null)
+                    {
+                        recipe.RecipeItemClasses.Remove(itemClassMatch);
+                        fulFilledItemClasses.Add(item);
+                        continue;
+                    }
+                    else
+                    {
+                        var itemTypeMatch = FindMatchedItemType(item, recipe);
+                        if (itemTypeMatch != null)
+                        {
+                            fulFilledItemTypes.Add(item);
+                            recipe.ItemTypes.Remove(itemTypeMatch);
+                            continue;
+                        }
+                        else
+                        {
+                            foreach (Item i in fulFilledItemClasses)
+                            {
+                                itemTypeMatch = FindMatchedItemType(i, recipe);
+                                itemClassMatch = FindMatchedItemClass(item, recipe);
+                                if (itemTypeMatch != null && itemClassMatch != null)
+                                {
+                                    fulFilledItemClasses.Remove(i);
+                                    fulFilledItemTypes.Add(i);
+                                    fulFilledItemClasses.Add(item);
+                                    continue;
+                                }
+                            }
+                            if (itemTypeMatch != null)
+                                continue;
+                        }
+                        throw new Exception($"Item {item.Name} is not valid for the recipe {recipe.Name}.");
+                    }
                 }
                 else if (ing.Type == IngredientType.Junk)
                 {
@@ -62,17 +89,69 @@ namespace TheGameApi.Core.Services
                     if (junk == null)
                         throw new Exception($"Item with ID {ing.Id} not found.");
 
-                    var junkMatch =
-                        recipe.JunkTypes.FirstOrDefault(i => i.Id == junk.TypeId);
+                    var junkClassMatch = FindMatchedJunkClass(junk, recipe);
 
-                    if (junkMatch == null)
-                        throw new Exception($"Junk {junk.Type.Name} does not meet either the type requirements for the recipe.");
-
-                    recipe.JunkTypes.Remove(junkMatch);
+                    if (junkClassMatch != null)
+                    {
+                        recipe.RecipeJunkClasses.Remove(junkClassMatch);
+                        fulFilledJunkClasses.Add(junk);
+                        continue;
+                    }
+                    else
+                    {
+                        var junkTypeMatch = FindMatchedJunkType(junk, recipe);
+                        if (junkTypeMatch != null)
+                        {
+                            fulFilledJunkTypes.Add(junk);
+                            recipe.JunkTypes.Remove(junkTypeMatch);
+                            continue;
+                        }
+                        else
+                        {
+                            foreach(Junk j in fulFilledJunkClasses)
+                            {
+                                junkTypeMatch = FindMatchedJunkType(j, recipe);
+                                junkClassMatch = FindMatchedJunkClass(junk, recipe);
+                                if (junkTypeMatch != null && junkClassMatch != null)
+                                {
+                                    fulFilledJunkClasses.Remove(j);
+                                    fulFilledJunkTypes.Add(j);
+                                    fulFilledJunkClasses.Add(junk);
+                                    continue;
+                                }
+                            }
+                            if (junkTypeMatch != null)
+                                continue;
+                        }
+                        throw new Exception($"Junk {junk.Type.Name} is not valid for the recipe {recipe.Name}.");
+                    }
                 }
             }
-
             return null;
+        }
+
+        private RecipeItemClass FindMatchedItemClass(Item item, Recipe recipe)
+        {
+            return recipe.RecipeItemClasses.Where(i => item.Type.Classes.Any(c => c.Id == i.Id) &&
+                item.Effectiveness > i.MinimumEffectiveness).OrderByDescending(i => i.MinimumEffectiveness).FirstOrDefault();
+            
+        }
+
+        private RecipeJunkClass FindMatchedJunkClass(Junk item, Recipe recipe)
+        {
+            return recipe.RecipeJunkClasses.Where(i => item.Type.Classes.Any(c => c.Id == i.Id) &&
+                item.Type.Effectiveness > i.MinimumEffectiveness).OrderByDescending(i => i.MinimumEffectiveness).FirstOrDefault();
+
+        }
+
+        private ItemType FindMatchedItemType(Item item, Recipe recipe)
+        {
+            return recipe.ItemTypes.FirstOrDefault(i => item.Type.Id == i.Id);
+        }
+
+        private JunkType FindMatchedJunkType(Junk junk, Recipe recipe)
+        {
+            return recipe.JunkTypes.FirstOrDefault(i => i.Id == junk.TypeId);
         }
     }
 }
