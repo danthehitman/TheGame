@@ -273,7 +273,6 @@
     <Compile Include="Core\Services\Model\RecipeIngredient.cs" />
     <Compile Include="Controllers\Model\ItemClassDto.cs" />
     <Compile Include="Controllers\Model\JunkClassDto.cs" />
-    <Compile Include="Controllers\Model\PostCraftRecipeDto.cs" />
     <Compile Include="Controllers\Model\RecipeItemClassDto.cs" />
     <Compile Include="Controllers\Model\ItemDto.cs" />
     <Compile Include="Controllers\Model\ItemTypeDto.cs" />

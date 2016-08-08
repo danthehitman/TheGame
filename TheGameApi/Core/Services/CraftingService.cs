@@ -29,7 +29,10 @@ namespace TheGameApi.Core.Services
 
         public async Task<Item> CraftItemRecipe(Guid recipeId, List<RecipeIngredient> ingredients)
         {
-            var recipe = await _recipeRepo.All.Include(r => r.ItemTypes).Include(r => r.JunkTypes).SingleOrDefaultAsync(r => r.Id == recipeId);
+            var recipe = await _recipeRepo.All.Include(r => r.ItemTypes.Select(i => i.Classes)).
+                Include(r => r.JunkTypes.Select(i => i.Classes)).Include(r => r.RecipeItemClasses.Select(i => i.ItemClass)).
+                Include(r => r.RecipeJunkClasses.Select(i => i.JunkClass)).
+                SingleOrDefaultAsync(r => r.Id == recipeId);
             if (recipe == null)
                 throw new Exception("Recipe not found.");
 
@@ -42,7 +45,7 @@ namespace TheGameApi.Core.Services
             {
                 if (ing.Type == IngredientType.Item)
                 {
-                    var item = await _itemRepo.All.Include(i => i.Type).SingleOrDefaultAsync(i => i.Id.Value == ing.Id);
+                    var item = await _itemRepo.All.Include(i => i.Type.Classes).SingleOrDefaultAsync(i => i.Id.Value == ing.Id);
                     if (item == null)
                         throw new Exception($"Item with ID {ing.Id} not found.");
 
@@ -85,7 +88,7 @@ namespace TheGameApi.Core.Services
                 }
                 else if (ing.Type == IngredientType.Junk)
                 {
-                    var junk = await _junkRepo.All.Include(i => i.Type).SingleOrDefaultAsync(i => i.Id.Value == ing.Id);
+                    var junk = await _junkRepo.All.Include(i => i.Type.Classes).SingleOrDefaultAsync(i => i.Id.Value == ing.Id);
                     if (junk == null)
                         throw new Exception($"Item with ID {ing.Id} not found.");
 
@@ -130,17 +133,22 @@ namespace TheGameApi.Core.Services
             return null;
         }
 
+        private Item CraftItemFromRecipe()
+        {
+
+        }
+
         private RecipeItemClass FindMatchedItemClass(Item item, Recipe recipe)
         {
-            return recipe.RecipeItemClasses.Where(i => item.Type.Classes.Any(c => c.Id == i.Id) &&
-                item.Effectiveness > i.MinimumEffectiveness).OrderByDescending(i => i.MinimumEffectiveness).FirstOrDefault();
+            return recipe.RecipeItemClasses.Where(i => item.Type.Classes.Any(c => c.Id == i.ItemClass.Id) &&
+                item.Effectiveness >= i.MinimumEffectiveness).OrderByDescending(i => i.MinimumEffectiveness).FirstOrDefault();
             
         }
 
         private RecipeJunkClass FindMatchedJunkClass(Junk item, Recipe recipe)
         {
-            return recipe.RecipeJunkClasses.Where(i => item.Type.Classes.Any(c => c.Id == i.Id) &&
-                item.Type.Effectiveness > i.MinimumEffectiveness).OrderByDescending(i => i.MinimumEffectiveness).FirstOrDefault();
+            return recipe.RecipeJunkClasses.Where(i => item.Type.Classes.Any(c => c.Id == i.JunkClass.Id) &&
+                item.Type.Effectiveness >= i.MinimumEffectiveness).OrderByDescending(i => i.MinimumEffectiveness).FirstOrDefault();
 
         }
 

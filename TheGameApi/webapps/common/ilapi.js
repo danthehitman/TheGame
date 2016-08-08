@@ -320,6 +320,20 @@ define(['pubsub', 'guidgen', 'utils'],
                 });
             };
 
+            self.postCraftRecipe = function (recipeId,  ingredients, successHandler, errorHandler) {
+                $.ajax({
+                    headers: { "auth": self.sessionToken },
+                    contentType: "application/json",
+                    type: "POST",
+                    url: self.APIROOT + "recipes/" + recipeId + "/craft",
+                    processData: false,
+                    dataType: "json",
+                    data: JSON.stringify(ingredients),
+                    success: successHandler,
+                    error: errorHandler
+                });
+            };
+
             self.getItemsForUser = function (userId, successHandler, errorHandler) {
                 $.ajax({
                     type: 'GET',

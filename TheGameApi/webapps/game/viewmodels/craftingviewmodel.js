@@ -68,6 +68,34 @@
 
             };
 
+            self.craftItem = function () {
+                var allIngredients = self.getIngredientsForCurrentRecipe();
+                self.apiService.postCraftRecipe(self.selectedRecipe().Id, allIngredients, self.onPostCraftItemSuccessHandler, self.onPostCraftItemErrorHandler);
+            };
+
+            self.onPostCraftItemSuccessHandler = function (item) {
+                alert(item.Name);
+            };
+
+            self.onPostCraftItemErrorHandler = function () {
+
+            };
+
+            self.getIngredientsForCurrentRecipe = function () {
+                var list = [];
+                if (self.selectedRecipe() != null)
+                {
+                    var i;
+                    for (i = 0; i < self.selectedRecipe().RecipeItemClasses.length; i++) {
+                        list.push({ "Type": "Item", "Id": self.selectedRecipe().RecipeItemClasses[i].selectedIngredient().Id });
+                    }
+                    for (i = 0; i < self.selectedRecipe().RecipeJunkClasses.length; i++) {
+                        list.push({ "Type": "Junk", "Id": self.selectedRecipe().RecipeJunkClasses[i].selectedIngredient().Id });
+                    }
+                }
+                return list;
+            };
+
             self.canCraftRecipe = function (recipe) {
                 var canCraft = true;
                 var i;

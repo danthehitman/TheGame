@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Http;
 using AutoMapper;
 using TheGameApi.Controllers.Model;
 using TheGameApi.Core.Services;
+using TheGameApi.Core.Services.Model;
 using TheGameApi.DataAccess;
 
 namespace TheGameApi.Controllers
@@ -33,9 +36,11 @@ namespace TheGameApi.Controllers
             return Mapper.Map<IList<RecipeDto>>(recipes);
         }
 
-        public ItemDto PostCraftRecipe(PostCraftRecipeDto dto)
+        [Route("api/recipes/{id}/craft")]
+        public async Task<ItemDto> PostCraftRecipe(Guid id, [FromBody]IEnumerable<RecipeIngredient> ingredients)
         {
-            return Mapper.Map<ItemDto>(_craftingService.CraftItemRecipe(dto.RecipeId, dto.Ingredients.ToList()));
+            var item = await _craftingService.CraftItemRecipe(id, ingredients.ToList());
+            return Mapper.Map<ItemDto>(item);
         }
     }
 }
