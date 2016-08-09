@@ -130,12 +130,13 @@ namespace TheGameApi.Core.Services
                     }
                 }
             }
-            return null;
+            return CraftItemFromRecipe(recipe, fulFilledItemTypes.Concat(fulFilledItemClasses).ToList(),
+                fulFilledJunkTypes.Concat(fulFilledJunkClasses).ToList());
         }
 
-        private Item CraftItemFromRecipe()
+        private Item CraftItemFromRecipe(Recipe recipe, List<Item> items, List<Junk> junk)
         {
-
+            return null;
         }
 
         private RecipeItemClass FindMatchedItemClass(Item item, Recipe recipe)
