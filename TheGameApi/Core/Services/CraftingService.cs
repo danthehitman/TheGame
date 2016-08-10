@@ -130,12 +130,21 @@ namespace TheGameApi.Core.Services
                     }
                 }
             }
-            return null;
+            return CraftItemFromRecipe(recipe, fulFilledJunkClasses.Concat(fulFilledJunkTypes).ToList(),
+                fulFilledItemClasses.Concat(fulFilledItemTypes).ToList());
         }
 
-        private Item CraftItemFromRecipe()
+        private Item CraftItemFromRecipe(Recipe recipe, List<Junk> junk, List<Item> items)
         {
+            Item item = null;
 
+            var maxEffectiveness = recipe.OutputItem.MaxEffectiveness;
+            var itemEffectiveness = 0;
+
+            var itemIngredientAverage = items.Average(i => i.Effectiveness);
+            var junkIngredientAverage = junk.Average(j => j.Type.Effectiveness);
+
+            return item;
         }
 
         private RecipeItemClass FindMatchedItemClass(Item item, Recipe recipe)
