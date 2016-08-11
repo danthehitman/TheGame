@@ -141,6 +141,8 @@ namespace TheGameApi.Core.Services
             var maxEffectiveness = recipe.OutputItem.MaxEffectiveness;
             var itemEffectiveness = 0;
 
+
+
             var itemIngredientAverage = items.Average(i => i.Effectiveness);
             var junkIngredientAverage = junk.Average(j => j.Type.Effectiveness);
 
